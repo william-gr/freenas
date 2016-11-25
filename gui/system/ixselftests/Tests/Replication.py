@@ -89,7 +89,7 @@ class replication(TestObject):
 
             if cipher == 'fast':
                 sshcmd = (
-                    '/usr/bin/ssh -c arcfour256,arcfour128,blowfish-cbc,'
+                    '/usr/local/bin/ssh -c arcfour256,arcfour128,blowfish-cbc,'
                     'aes128-ctr,aes192-ctr,aes256-ctr -i /data/ssh/replication'
                     ' -o BatchMode=yes -o StrictHostKeyChecking=yes'
                     # There's nothing magical about ConnectTimeout, it's an average
@@ -98,11 +98,11 @@ class replication(TestObject):
                     ' -o ConnectTimeout=7'
                 )
             elif cipher == 'disabled':
-                sshcmd = ('/usr/bin/ssh -ononeenabled=yes -ononeswitch=yes -i /data/ssh/replication -o BatchMode=yes'
+                sshcmd = ('/usr/local/bin/ssh -ononeenabled=yes -ononeswitch=yes -i /data/ssh/replication -o BatchMode=yes'
                           ' -o StrictHostKeyChecking=yes'
                           ' -o ConnectTimeout=7')
             else:
-                sshcmd = ('/usr/bin/ssh -i /data/ssh/replication -o BatchMode=yes'
+                sshcmd = ('/usr/local/bin/ssh -i /data/ssh/replication -o BatchMode=yes'
                           ' -o StrictHostKeyChecking=yes'
                           ' -o ConnectTimeout=7')
 

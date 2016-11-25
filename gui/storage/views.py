@@ -130,7 +130,7 @@ def replications_keyscan(request):
         data = {'error': True, 'errmsg': _('Please enter a hostname')}
     else:
         proc = subprocess.Popen([
-            "/usr/bin/ssh-keyscan",
+            "/usr/local/bin/ssh-keyscan",
             "-p", str(port),
             "-T", "2",
             str(host),

@@ -12,7 +12,7 @@ class ReplicationService(Service):
     @private
     def ssh_keyscan(self, host, port):
         proc = Popen([
-            "/usr/bin/ssh-keyscan",
+            "/usr/local/bin/ssh-keyscan",
             "-p", str(port),
             "-T", "2",
             str(host),
