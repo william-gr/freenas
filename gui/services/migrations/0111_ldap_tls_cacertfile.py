@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import DataMigration
@@ -19,10 +20,9 @@ class Migration(DataMigration):
                         f.write(ldap.ldap_tls_cacertfile)
                         f.close()
                     ldap.ldap_tls_cacertfile = filename
-                    ldap.save()  
+                    ldap.save()
             except Exception as e:
-                print "Unable to migrate LDAP certificate: %s" % e
-        
+                print("Unable to migrate LDAP certificate: %s" % e)
 
     def backwards(self, orm):
         filename = '/data/ldap_tls_cacertfile'
@@ -36,13 +36,12 @@ class Migration(DataMigration):
                     f.close()
                 if buf[-1] != '\n':
                     buf = "%s\n" % buf
-                ldap.ldap_tls_cacertfile = buf 
-                ldap.save()  
+                ldap.ldap_tls_cacertfile = buf
+                ldap.save()
                 os.unlink(filename)
 
             except Exception as e:
-                print "Unable to rollback LDAP certificate migration: %s" % e
-        
+                print("Unable to rollback LDAP certificate migration: %s" % e)
 
     models = {
         u'services.activedirectory': {
