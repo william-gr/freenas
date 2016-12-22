@@ -8,20 +8,20 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 
-from freenasUI.common.freenasldap import (
-    FreeNAS_ActiveDirectory, 
-    FLAGS_DBINIT
-)
 
 class Migration(DataMigration):
     no_dry_run = True
 
     def forwards(self, orm):
         try:
+            from freenasUI.common.freenasldap import (
+                FreeNAS_ActiveDirectory,
+                FLAGS_DBINIT
+            )
             ad = orm.ActiveDirectory.objects.all()[0]
             fad = FreeNAS_ActiveDirectory(flags=FLAGS_DBINIT)
 
-            kr = orm.KerberosRealm() 
+            kr = orm.KerberosRealm()
             kr.krb_realm = ad.ad_domainname.upper()
 
             if ad.ad_krbname:
@@ -45,18 +45,18 @@ class Migration(DataMigration):
                 kt.keytab_principal = "host/%s" % ad.ad_domainname
                 kt.keytab_file = "/data/%s.keytab" % re.sub(
                     '[^a-zA-Z0-9]+', '_',
-                     kt.keytab_principal
+                    kt.keytab_principal
                 )
                 kt.save()
 
-		os.rename(ad.ad_keytab, kt.keytab_file)
-                os.chmod(kt.keytab_file, 0400)
+                os.rename(ad.ad_keytab, kt.keytab_file)
+                os.chmod(kt.keytab_file, 0o400)
 
                 ad.ad_kerberos_keytab = kt
                 ad.save()
 
         except Exception as e:
-            print >> sys.stderr, "ERROR: %s" % e
+             print("ERROR: %s" % e, file=sys.stderr)
 
     def backwards(self, orm):
         "Write your backwards methods here."
