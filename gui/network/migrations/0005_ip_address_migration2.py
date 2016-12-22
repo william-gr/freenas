@@ -4,22 +4,22 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 
+
 class Migration(DataMigration):
 
     def forwards(self, orm):
-	for iface in orm.Interfaces.objects.all():
-		iface.int_ipv4address = iface.int_ipv4address_temp
-		iface.int_ipv6address = iface.int_ipv6address_temp
-		iface.save()
+        for iface in orm.Interfaces.objects.all():
+            iface.int_ipv4address = iface.int_ipv4address_temp
+            iface.int_ipv6address = iface.int_ipv6address_temp
+            iface.save()
 
     def backwards(self, orm):
-	for iface in orm.Interfaces.objects.all():
-		if iface.int_v4netmaskbit:
-			iface.int_ipv4address = iface.int_ipv4address + "/" + iface.int_v4netmaskbit
-		if iface.int_v6netmaskbit:
-			iface.int_ipv6address = iface.int_ipv6address + "/" + iface.int_v6netmaskbit
-		iface.save()
-
+        for iface in orm.Interfaces.objects.all():
+            if iface.int_v4netmaskbit:
+                iface.int_ipv4address = iface.int_ipv4address + "/" + iface.int_v4netmaskbit
+            if iface.int_v6netmaskbit:
+                iface.int_ipv6address = iface.int_ipv6address + "/" + iface.int_v6netmaskbit
+            iface.save()
 
     models = {
         'network.globalconfiguration': {
