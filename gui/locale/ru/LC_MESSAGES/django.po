@@ -9037,7 +9037,7 @@ msgstr "Подтвердите пароль учетного имени доме
 #: services/forms.py:758
 #: services/models.py:1612
 msgid "Kerberos keytab"
-msgstr "Kerberos keytab"
+msgstr "Файл Kerberos Keytab"
 
 #: services/forms.py:1081
 msgid "LUN ID already exists."
@@ -10169,7 +10169,7 @@ msgstr ""
 
 #: freeadmin/navtree.py:256
 msgid "Initial Wizard"
-msgstr "Помощник Инициализации"
+msgstr "Безопасная инициализация"
 
 #: middleware/notifier.py:2222
 msgid "Failed to create group %s"
@@ -14010,3 +14010,28 @@ msgstr "Все пароли будут сброшены. Установите и
 #: templates/tasks/cloudsync_run.html:5
 msgid "Would you like to run this cloud sync now?"
 msgstr "Хотите выполнить это задание синхронизации сейчас?"
+
+#: services/views.py:71
+#, fuzzy
+msgid "A directory service is already enabled."
+msgstr "Службу activedirectory не удалось перезагрузить."
+
+#: system/forms.py:212
+msgid "Name does not allow spaces and the following characters: /*'\"?@"
+msgstr ""
+
+#: system/forms.py:2303
+#: system/forms.py:2444
+#: system/forms.py:2575
+#: system/forms.py:2813
+#: system/forms.py:2938
+#: system/forms.py:3079
+#, fuzzy
+msgid "Use alphanumeric characters, \"_\" and \"-\"."
+msgstr "Используйте буквы, цифры, \".\", \"-\" и \"_\"."
+
+#: system/models.py:602
+msgid ""
+"Internal identifier of the certificate. Only alphanumeric, \"_\" and \"-\" "
+"are allowed."
+msgstr ""

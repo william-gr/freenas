@@ -61,7 +61,6 @@ msgstr "                  Si è verificato qualche errore!                "
 #~ msgstr "Pulisci"
 
 #: freeadmin/static/lib/js/freeadmin.js:551
-#, fuzzy
 msgid "Wipe Disk"
 msgstr "Modifica disco"
 
@@ -631,4 +630,92 @@ msgstr ""
 
 #: freeadmin/static/lib/js/freeadmin.js:359
 msgid "Ok"
+msgstr ""
+
+#: freeadmin/static/lib/js/alert.js:69
+msgid "Warning"
+msgstr ""
+
+#: freeadmin/static/lib/js/alert.js:73
+msgid "Critical"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin.js:1425
+msgid "The action will result in migration of dataset."
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin.js:1425
+msgid "Some services will be restarted."
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin.js:1438
+msgid "Continue"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:43
+msgid "AFP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:44
+msgid "Domain Controller"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:45
+msgid "Dynamic DNS"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:46
+msgid "FTP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:47
+msgid "iSCSI"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:48
+msgid "LLDP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:49
+msgid "NFS"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:50
+msgid "Rsync"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:51
+msgid "S.M.A.R.T."
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:52
+msgid "SNMP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:53
+msgid "SSH"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:54
+msgid "SMB"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:55
+msgid "TFTP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:56
+msgid "UPS"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:57
+msgid "WebDAV"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:141
+msgid "Stop Now"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:141
+msgid "Start Now"
 msgstr ""

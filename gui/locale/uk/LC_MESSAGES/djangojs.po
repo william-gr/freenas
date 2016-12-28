@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-04 02:10-0700\n"
-"PO-Revision-Date: 2016-10-18 09:16+0000\n"
+"PO-Revision-Date: 2016-12-13 16:15+0000\n"
 "Last-Translator: mav <mav@freebsd.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1476782179.0\n"
+"X-POOTLE-MTIME: 1481645702.0\n"
 
 #~ msgid "Reporting"
 #~ msgstr "Звіти"
@@ -675,4 +675,72 @@ msgstr ""
 
 #: freeadmin/static/lib/js/freeadmin.js:1438
 msgid "Continue"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:43
+msgid "AFP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:44
+msgid "Domain Controller"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:45
+msgid "Dynamic DNS"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:46
+msgid "FTP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:47
+msgid "iSCSI"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:48
+msgid "LLDP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:49
+msgid "NFS"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:50
+msgid "Rsync"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:51
+msgid "S.M.A.R.T."
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:52
+msgid "SNMP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:53
+msgid "SSH"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:54
+msgid "SMB"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:55
+msgid "TFTP"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:56
+msgid "UPS"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:57
+msgid "WebDAV"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:141
+msgid "Stop Now"
+msgstr ""
+
+#: freeadmin/static/lib/js/freeadmin/Services.js:141
+msgid "Start Now"
 msgstr ""

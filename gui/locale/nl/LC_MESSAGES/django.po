@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-06-04 02:03-0700\n"
-"PO-Revision-Date: 2016-12-12 11:25+0000\n"
+"PO-Revision-Date: 2016-12-14 12:56+0000\n"
 "Last-Translator: Tonnes <tonnes.mb@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.0\n"
-"X-POOTLE-MTIME: 1481541904.0\n"
+"X-POOTLE-MTIME: 1481720168.0\n"
 
 #: choices.py:40
 msgid "Plain"
@@ -12853,22 +12853,18 @@ msgid " TrueNAS Management IP Address"
 msgstr " IP-adres voor TrueNAS-beheer"
 
 #: vcp/models.py:49
-#, fuzzy
 msgid " vCenter Hostname/IP Address"
 msgstr " vCenter-hostnaam/-IP-adres"
 
 #: vcp/models.py:55
-#, fuzzy
 msgid " vCenter Port"
 msgstr " vCenter-poort"
 
 #: vcp/models.py:60
-#, fuzzy
 msgid " vCenter User name"
 msgstr " vCenter-gebruikersnaam"
 
 #: vcp/models.py:67
-#, fuzzy
 msgid " vCenter Password"
 msgstr " vCenter-wachtwoord"
 
@@ -13295,7 +13291,9 @@ msgstr ""
 #: system/alertmods/vmwaresnapdelete_fails.py:25
 #, fuzzy
 msgid "VMWare snapshot deletion %(snap)s failed for the following VMs: %(vms)s"
-msgstr "VMware-momentopname %(snap)s mislukt voor de volgende VM's: %(vms)s"
+msgstr ""
+"Verwijderen van VMware-momentopname %(snap)s mislukt voor de volgende VM's: "
+"%(vms)s"
 
 #: system/forms.py:1613
 msgid "Share path %s already exists"
@@ -13571,12 +13569,10 @@ msgstr ""
 "Kan gekoppelde periodieke momentopname %(task)s niet verwijderen:%(error)s"
 
 #: services/admin.py:113
-#, fuzzy
 msgid "Listen (Node A)"
 msgstr "Luisteren (Node A)"
 
 #: services/admin.py:118
-#, fuzzy
 msgid "Listen (Node B)"
 msgstr "Luisteren (Node B)"
 
@@ -13959,7 +13955,6 @@ msgid "This option can only be used for datasets."
 msgstr "Deze optie kan alleen voor gegevenssets worden gebruikt."
 
 #: sharing/models.py:334
-#, fuzzy
 msgid ""
 "The credentials of the specified user is used for remote access by root."
 msgstr ""
@@ -13967,7 +13962,6 @@ msgstr ""
 "toegang door root."
 
 #: sharing/models.py:274
-#, fuzzy
 msgid ""
 "These parameters are added to the [Volume] section of afp.conf. Add each "
 "different parameter on a newline"
@@ -13976,7 +13970,6 @@ msgstr ""
 "elke parameter toe op een eigen nieuwe regel"
 
 #: sharing/models.py:345
-#, fuzzy
 msgid ""
 "The credentials of the specified group is used for remote access by root."
 msgstr ""
@@ -13984,7 +13977,6 @@ msgstr ""
 "door root."
 
 #: sharing/models.py:356
-#, fuzzy
 msgid ""
 "The credentials of the specified user is used for remote access by all users."
 msgstr ""
@@ -13992,7 +13984,6 @@ msgstr ""
 "toegang door alle gebruikers."
 
 #: sharing/models.py:367
-#, fuzzy
 msgid ""
 "The credentials of the specified group is used for remote access by all "
 "users."
@@ -14008,7 +13999,6 @@ msgid "Comments"
 msgstr "Opmerkingen"
 
 #: storage/forms.py:2011
-#, fuzzy
 msgid "Setup mode"
 msgstr "Installatiemodus"
 
@@ -14027,7 +14017,7 @@ msgstr "Externe HTTP/HTTPS-poort"
 #: storage/forms.py:2030
 #, fuzzy
 msgid "Remote HTTPS"
-msgstr "Externe host"
+msgstr "Externe HTTPS"
 
 #: storage/forms.py:2035
 #, fuzzy
@@ -14076,8 +14066,7 @@ msgstr "Locatie om het updatebestand tijdelijk te bewaren"
 #, fuzzy
 msgid "The update file is temporarily stored here before being applied."
 msgstr ""
-"Het systeem zal deze locatie gebruiken om het firmwarebestand tijdelijk te "
-"bewaren voordat het wordt toegepast."
+"Hier wordt het updatebestand tijdelijk bewaard voordat het wordt toegepast."
 
 #: system/forms.py:2613
 #, fuzzy
@@ -14124,7 +14113,7 @@ msgstr "Ongeldige referentie."
 #: tasks/forms.py:86
 #, fuzzy
 msgid "Bucket is required."
-msgstr "Er is een keytab vereist."
+msgstr "Bucket is vereist."
 
 #: tasks/hook.py:40
 #: tasks/models.py:103
@@ -14172,3 +14161,28 @@ msgstr ""
 #: templates/tasks/cloudsync_run.html:5
 msgid "Would you like to run this cloud sync now?"
 msgstr "Wilt u deze cloudsynchronisatie nu uitvoeren?"
+
+#: services/views.py:71
+#, fuzzy
+msgid "A directory service is already enabled."
+msgstr "Opnieuw laden van de activedirectory-service is mislukt."
+
+#: system/forms.py:212
+msgid "Name does not allow spaces and the following characters: /*'\"?@"
+msgstr ""
+
+#: system/forms.py:2303
+#: system/forms.py:2444
+#: system/forms.py:2575
+#: system/forms.py:2813
+#: system/forms.py:2938
+#: system/forms.py:3079
+#, fuzzy
+msgid "Use alphanumeric characters, \"_\" and \"-\"."
+msgstr "Gebruik alfanumerieke tekens, '.', '-' en '_'."
+
+#: system/models.py:602
+msgid ""
+"Internal identifier of the certificate. Only alphanumeric, \"_\" and \"-\" "
+"are allowed."
+msgstr ""
