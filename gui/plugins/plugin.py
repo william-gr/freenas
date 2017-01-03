@@ -188,7 +188,7 @@ class Available(object):
     __cache = None
     __repo_id = None
     __repo_desc = None
-    __def_repo = None
+    __def_repo = False
 
     def __init__(self):
         self.__cache = dict()
@@ -204,13 +204,15 @@ class Available(object):
         The method get_repo will result in a unix process fork for pbi_listrepo
         that won't be available in a complete install.
         """
-        if self.__def_repo is not None:
+        if self.__def_repo is True:
             return self.__repo_id
-        self.__def_repo = True
+
         repo = self.get_repo(repo_id=repo_id, create=True)
         if repo:
             self.__repo_id = repo[0]
             self.__repo_desc = repo[1]
+            self.__def_repo = True
+
         return self.__repo_id
 
     def create_repo(self):
@@ -233,7 +235,6 @@ class Available(object):
         if not out:
             return False
 
-        notifier().restart("pbid")
         return True
 
     def get_repo(self, repo_id=None, create=False):
@@ -244,32 +245,12 @@ class Available(object):
         else:
             repos = p.listrepo()
 
-        if not repos and create is False:
-            return None
-
-        elif not repos and create is True:
-            if not self.create_repo():
-                return None
-            repos = p.listrepo()
-
+        if not repos and create is True:
+            if self.create_repo():
+                repos = p.listrepo()
         elif repos and repo_id is not None:
             for repo in repos:
                 return repo
-
-        for repo in repos:
-            if re.match('Official FreeNAS Repository', repo[1], re.I):
-                return repo
-
-        for repo in repos:
-            return repo
-
-        if create is True:
-            if not self.create_repo():
-                return None
-
-            repos = p.listrepo()
-            if not repos:
-                return None
 
         for repo in repos:
             description = repo[1]
@@ -479,7 +460,7 @@ class Available(object):
     def get_remote(self, repo_id=None, cache=False):
         log.debug("get_remote:  repod_id = %s, cache = %s", repo_id, cache)
 
-        if not repo_id:
+        if repo_id is None:
             repo_id = self._def_repo_id()
             log.debug(
                 "get_remote: repo_id not specified, repo_id = %s",
@@ -547,6 +528,7 @@ class Available(object):
 
         log.debug("get_remote: plugins = %s", plugins)
         self.__cache[repo_id] = plugins
+
         return plugins
 
     def _get_remote_item(self, repo_id, p, ie, urls):
