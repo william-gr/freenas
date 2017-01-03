@@ -216,7 +216,6 @@ class Available(object):
         return self.__repo_id
 
     def create_repo(self):
-        from freenasUI.middleware.notifier import notifier
         url = PLUGINS_REPO
         rpath = "/var/tmp/pbi-repo.rpo"
 
