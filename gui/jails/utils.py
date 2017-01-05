@@ -61,7 +61,11 @@ def get_jails_index(release=None, arch=None):
 def ping_host(host, ping6=False):
     tseconds = 2
 
-    cmd = "/sbin/ping -q -t %d -o %s" % (tseconds, host)
+    # XXX: We have some kind of race condition here, the command
+    # below is just to document the workaround.
+    # cmd = "/sbin/ping -q -t %d -o %s" % (tseconds, host)
+
+    cmd = "/sbin/ping -q -o %s -c 5" % (host)
     if ping6:
         cmd = "/sbin/ping6 -q -o %s -c 1" % host
 
@@ -71,6 +75,8 @@ def ping_host(host, ping6=False):
     timeout = t + tseconds
 
     while t <= timeout:
+        log.debug("ping_host(): t: %d and timeout: %d", t, timeout)
+        log.debug("ping_host(): p.poll(): %s", p.poll())
         if p.poll() == 0:
             break
 
@@ -324,7 +330,6 @@ def get_jail_ipv4_network():
     try:
         jc = JailsConfiguration.objects.order_by("-id")[0]
         jail_ipv4_network = sipcalc_type(jc.jc_ipv4_network)
-
     except:
         jail_ipv4_network = None
 
@@ -358,7 +363,6 @@ def get_jail_ipv4_network_end():
             jc.jc_ipv4_network_end.split('/')[0],
             jail_ipv4_network.network_mask_bits
         ))
-
     except:
         jail_ipv4_network_end = None
 
