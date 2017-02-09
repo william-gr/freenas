@@ -29,7 +29,7 @@ import logging
 import os
 import re
 import subprocess
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import signal
 import sysctl
 
@@ -292,7 +292,7 @@ class Uid(object):
         self._start = start
         self._counter = start
 
-    def next(self):
+    def __next__(self):
         number = self._counter
         self._counter += 1
         return number
@@ -876,7 +876,7 @@ class VolumeResourceMixin(NestedMixin):
                 if key == 'data' and isinstance(current, zfs.Root):
                     parent.update(data)
                 else:
-                    data['id'] = uid.next()
+                    data['id'] = next(uid)
                     parent['children'].append(data)
 
                 for child in current:
@@ -921,12 +921,12 @@ class VolumeResourceMixin(NestedMixin):
     def _get_children(self, bundle, vol, children, uid):
         rv = []
         attr_fields = ('avail', 'used', 'used_pct')
-        for path, child in children.items():
+        for path, child in list(children.items()):
             if child.name.startswith('.'):
                 continue
 
             data = {
-                'id': uid.next(),
+                'id': next(uid),
                 'name': child.name.rsplit('/', 1)[-1],
                 'type': 'dataset' if child.category == 'filesystem' else 'zvol',
                 'status': '-',
@@ -1052,7 +1052,7 @@ class VolumeResourceMixin(NestedMixin):
     def dehydrate(self, bundle):
         bundle = super(VolumeResourceMixin, self).dehydrate(bundle)
 
-        for key in bundle.data.keys():
+        for key in list(bundle.data.keys()):
             if key.startswith('layout-'):
                 del bundle.data[key]
 
@@ -1280,7 +1280,7 @@ class TaskResourceMixin(object):
             wchoices = dict(choices.WEEKDAYS_CHOICES)
             labels = []
             for w in eval(bundle.obj.task_byweekday + ','):
-                labels.append(unicode(wchoices[str(w)]))
+                labels.append(str(wchoices[str(w)]))
             days = ', '.join(labels)
             repeat = _('on every %(days)s') % {
                 'days': days,
@@ -1335,11 +1335,11 @@ class NFSShareResourceMixin(object):
     def dehydrate(self, bundle):
         bundle = super(NFSShareResourceMixin, self).dehydrate(bundle)
         if self.is_webclient(bundle.request):
-            bundle.data['nfs_paths'] = u"%s" % ', '.join(bundle.obj.nfs_paths)
+            bundle.data['nfs_paths'] = "%s" % ', '.join(bundle.obj.nfs_paths)
         else:
             bundle.data['nfs_paths'] = bundle.obj.nfs_paths
 
-        for key in bundle.data.keys():
+        for key in list(bundle.data.keys()):
             if key.startswith('path_set'):
                 del bundle.data[key]
         return bundle
@@ -1438,7 +1438,7 @@ class InterfacesResourceMixin(object):
         bundle.data['int_aliases'] = [
             a.alias_network for a in bundle.obj.alias_set.all()
         ]
-        for key in bundle.data.keys():
+        for key in list(bundle.data.keys()):
             if key.startswith('alias_set'):
                 del bundle.data[key]
 
@@ -1546,7 +1546,7 @@ class LAGGInterfaceResourceMixin(object):
         if 'lagg_interface_id' in bundle.data:
             del bundle.data['lagg_interface_id']
         if self.is_webclient(bundle.request):
-            bundle.data['lagg_interface'] = unicode(bundle.obj)
+            bundle.data['lagg_interface'] = str(bundle.obj)
             bundle.data['_edit_url'] = reverse(
                 'freeadmin_network_interfaces_edit',
                 kwargs={
@@ -1580,7 +1580,7 @@ class LAGGInterfaceMembersResourceMixin(object):
         bundle = super(LAGGInterfaceMembersResourceMixin, self).dehydrate(
             bundle
         )
-        bundle.data['lagg_interfacegroup'] = unicode(
+        bundle.data['lagg_interfacegroup'] = str(
             bundle.obj.lagg_interfacegroup
         )
         return bundle
@@ -1603,7 +1603,7 @@ class CloudSyncResourceMixin(NestedMixin):
             bundle.data['_run_url'] = reverse('cloudsync_run', kwargs={
                 'oid': bundle.obj.id
             })
-            bundle.data['credential'] = unicode(bundle.obj.credential)
+            bundle.data['credential'] = str(bundle.obj.credential)
         job = self.__jobs.get(bundle.obj.id)
         if job:
             if job['state'] == 'RUNNING':
@@ -1752,9 +1752,7 @@ class ISCSIPortalResourceMixin(object):
                 p.iscsi_target_portalip_port,
             ) for p in bundle.obj.ips.all()]
             bundle.data['iscsi_target_portal_ips'] = listen
-        for key in filter(
-            lambda y: y.startswith('portalip_set'), bundle.data.keys()
-        ):
+        for key in [y for y in list(bundle.data.keys()) if y.startswith('portalip_set')]:
             del bundle.data[key]
         return bundle
 
@@ -1923,7 +1921,7 @@ class BsdUserResourceMixin(NestedMixin):
             bsdgrp_group__in=deserialized
         )]
 
-        data = QueryDict(urllib.urlencode({'bsduser_to_group': ids}, doseq=True))
+        data = QueryDict(urllib.parse.urlencode({'bsduser_to_group': ids}, doseq=True))
 
         form = bsdUserToGroupForm(userid=obj.id, data=data)
         if not form.is_valid():
@@ -2076,7 +2074,7 @@ class JailsResourceMixin(NestedMixin):
         try:
             Warden().stop(jail=obj.jail_host)
             Warden().start(jail=obj.jail_host)
-        except Exception, e:
+        except Exception as e:
             raise ImmediateHttpResponse(
                 response=self.error_response(request, {
                     'error': e,
@@ -2094,7 +2092,7 @@ class JailsResourceMixin(NestedMixin):
         notifier().reload("http")
         try:
             Warden().start(jail=obj.jail_host)
-        except Exception, e:
+        except Exception as e:
             raise ImmediateHttpResponse(
                 response=self.error_response(request, {
                     'error': e,
@@ -2112,7 +2110,7 @@ class JailsResourceMixin(NestedMixin):
         notifier().reload("http")
         try:
             Warden().stop(jail=obj.jail_host)
-        except Exception, e:
+        except Exception as e:
             raise ImmediateHttpResponse(
                 response=self.error_response(request, {
                     'error': e,
@@ -2271,7 +2269,7 @@ class PluginsResourceMixin(NestedMixin):
             success, errmsg = obj.service_start(request)
             if success is not True:
                 raise ValueError(errmsg)
-        except Exception, e:
+        except Exception as e:
             raise ImmediateHttpResponse(
                 response=self.error_response(request, {
                     'error': e,
@@ -2289,7 +2287,7 @@ class PluginsResourceMixin(NestedMixin):
             success, errmsg = obj.service_stop(request)
             if success is not True:
                 raise ValueError(errmsg)
-        except Exception, e:
+        except Exception as e:
             raise ImmediateHttpResponse(
                 response=self.error_response(request, {
                     'error': e,
@@ -2397,7 +2395,7 @@ class SnapshotResource(DojoResource):
             times, make sure we don't do that.
             """
             found = False
-            for _repl, snaps in repli.items():
+            for _repl, snaps in list(repli.items()):
                 if (
                     _repl.repl_remote.ssh_remote_hostname == repl.repl_remote.ssh_remote_hostname and
                     _repl.repl_remote.ssh_remote_port == repl.repl_remote.ssh_remote_port
@@ -2411,7 +2409,7 @@ class SnapshotResource(DojoResource):
         snapshots = notifier().zfs_snapshot_list(replications=repli)
 
         results = []
-        for snaps in snapshots.values():
+        for snaps in list(snapshots.values()):
             results.extend(snaps)
         FIELD_MAP = {
             'extra': 'mostrecent',
@@ -2473,16 +2471,16 @@ class SnapshotResource(DojoResource):
         )
         try:
             notifier().zfs_mksnap(**deserialized)
-        except MiddlewareError, e:
+        except MiddlewareError as e:
             raise ImmediateHttpResponse(
                 response=self.error_response(request, {
                     'error': e.value,
                 })
             )
-        snap = notifier().zfs_snapshot_list(path='%s@%s' % (
+        snap = list(notifier().zfs_snapshot_list(path='%s@%s' % (
             deserialized['dataset'],
             deserialized['name'],
-        )).values()[0][0]
+        )).values())[0][0]
         bundle = self.full_dehydrate(
             self.build_bundle(obj=snap, request=request)
         )
@@ -2500,10 +2498,10 @@ class SnapshotResource(DojoResource):
                 })
             )
         dataset, name = kwargs['pk'].split('@', 1)
-        snap = notifier().zfs_snapshot_list(path='%s@%s' % (
+        snap = list(notifier().zfs_snapshot_list(path='%s@%s' % (
             dataset,
             name,
-        )).values()
+        )).values())
         if not snap:
             raise ImmediateHttpResponse(
                 response=self.error_response(bundle.request, {
@@ -2514,7 +2512,7 @@ class SnapshotResource(DojoResource):
 
         try:
             notifier().destroy_zfs_dataset(path=kwargs['pk'].encode('utf8'))
-        except MiddlewareError, e:
+        except MiddlewareError as e:
             raise ImmediateHttpResponse(
                 response=self.error_response(bundle.request, {
                     'error': e.value,
@@ -3073,7 +3071,7 @@ class BootEnvResource(NestedMixin, DojoResource):
                 if key == 'data' and isinstance(current, zfs.Root):
                     parent.update(data)
                 else:
-                    data['id'] = uid.next()
+                    data['id'] = next(uid)
                     parent['children'].append(data)
 
                 for child in current:
@@ -3387,7 +3385,7 @@ class UpdateResourceMixin(NestedMixin):
         conf.LoadTrainsConfig()
         trains = conf.AvailableTrains() or []
         if trains:
-            trains = trains.keys()
+            trains = list(trains.keys())
 
         seltrain = update.get_train()
         if seltrain in conf._trains:

@@ -8,15 +8,15 @@ BLACKLIST = [
     'Certificate'
 ]
 NAME = _('System')
-ICON = u'SystemIcon'
+ICON = 'SystemIcon'
 ORDER = 1
 
 
 class Advanced(TreeNode):
 
     gname = 'Advanced'
-    name = _(u'Advanced')
-    icon = u"SettingsIcon"
+    name = _('Advanced')
+    icon = "SettingsIcon"
     type = 'opensystem'
     order = -90
     replace_only = True
@@ -26,7 +26,7 @@ class Advanced(TreeNode):
 class BootEnv(TreeNode):
 
     gname = 'BootEnv'
-    name = _(u'Boot')
+    name = _('Boot')
     icon = 'BootIcon'
     type = 'opensystem'
     order = -92
@@ -47,7 +47,7 @@ class CloudCredentials(TreeNode):
 class Email(TreeNode):
 
     gname = 'Email'
-    name = _(u'Email')
+    name = _('Email')
     icon = 'EmailIcon'
     type = 'opensystem'
     order = -85
@@ -58,8 +58,8 @@ class Email(TreeNode):
 class General(TreeNode):
 
     gname = 'Settings'
-    name = _(u'General')
-    icon = u"SettingsIcon"
+    name = _('General')
+    icon = "SettingsIcon"
     type = 'opensystem'
     order = -95
     replace_only = True
@@ -69,8 +69,8 @@ class General(TreeNode):
 class Info(TreeNode):
 
     gname = 'SysInfo'
-    name = _(u'Information')
-    icon = u"InfoIcon"
+    name = _('Information')
+    icon = "InfoIcon"
     type = 'opensystem'
     order = -100
 
@@ -78,8 +78,8 @@ class Info(TreeNode):
 class SystemDataset(TreeNode):
 
     gname = 'SystemDataset'
-    name = _(u'System Dataset')
-    icon = u"SysDatasetIcon"
+    name = _('System Dataset')
+    icon = "SysDatasetIcon"
     type = 'opensystem'
     order = -80
     replace_only = True
@@ -106,7 +106,7 @@ class CertificateAuthorityView(TreeNode):
     gname = 'CertificateAuthority.View'
     name = _('CAs')
     type = 'opensystem'
-    icon = u'CertificateAuthorityIcon'
+    icon = 'CertificateAuthorityIcon'
     order = 10
 
 
@@ -115,14 +115,14 @@ class CertificateView(TreeNode):
     gname = 'Certificate.View'
     name = _('Certificates')
     type = 'opensystem'
-    icon = u'CertificateIcon'
+    icon = 'CertificateIcon'
     order = 15
 
 
 class Support(TreeNode):
 
     gname = 'Support'
-    name = _(u'Support')
-    icon = u"SupportIcon"
+    name = _('Support')
+    icon = "SupportIcon"
     type = 'opensystem'
     order = 20

@@ -559,7 +559,7 @@ def generate_randomMAC():
     first = first_byte << 4
     first = first | random.choice(local_list)
     val = [first, random.randint(0x00, 0xff), random.randint(0x00, 0xff), random.randint(0x00, 0xff), random.randint(0x00, 0xff), random.randint(0x00, 0xff)]
-    mac_address = ':'.join(map(lambda x: "%02x" % x, val))
+    mac_address = ':'.join(["%02x" % x for x in val])
     return mac_address
 
 
@@ -1210,7 +1210,7 @@ class JailMountPointForm(ModelForm):
 
         try:
             clean_path_execbit(self.jc.jc_path)
-        except forms.ValidationError, e:
+        except forms.ValidationError as e:
             self.errors['__all__'] = self.error_class(e.messages)
 
         pjlist = []
@@ -1258,7 +1258,7 @@ class JailMountPointForm(ModelForm):
         if mounted:
             try:
                 obj.mount()
-            except ValueError, e:
+            except ValueError as e:
                 raise MiddlewareError(
                     _("The path could not be mounted %(source)s: %(error)s") %
                     {
@@ -1269,7 +1269,7 @@ class JailMountPointForm(ModelForm):
         else:
             try:
                 obj.umount()
-            except ValueError, e:
+            except ValueError as e:
                 raise MiddlewareError(_(
                     "The path could not be umounted %(source)s: %(error)s" % {
                         'source': obj.source,
