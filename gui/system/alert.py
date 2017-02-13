@@ -354,7 +354,7 @@ class AlertPlugins(metaclass=HookMetaclass):
             if hardware and adv.adv_ixalert:
                 self.ticket(hardware)
 
-        with open(self.ALERT_FILE, 'w') as f:
+        with open(self.ALERT_FILE, 'wb') as f:
             pickle.dump({
                 'last': time.time(),
                 'alerts': rvs,
@@ -365,7 +365,7 @@ class AlertPlugins(metaclass=HookMetaclass):
     def get_alerts(self):
         if not os.path.exists(self.ALERT_FILE):
             return []
-        with open(self.ALERT_FILE, 'r') as f:
+        with open(self.ALERT_FILE, 'rb') as f:
             return pickle.load(f)['alerts']
 
 
