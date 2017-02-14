@@ -126,12 +126,26 @@ _interface_config()
 				internal_iface="ix0"
 			elif [ "$(ha_hardware)" = "AIC" ]; then
 				internal_iface="ntb0"
+				if [ "${node}" = "A" ]; then
+					ether="02:8c:97:2e:a5:01"
+				else
+					ether="02:8c:97:2e:a5:02"
+				fi
 			elif [ "$(ha_hardware)" = "ULTIMATE" ]; then
 				internal_iface="igb1"
 			fi
-			echo "ifconfig_${internal_iface}=\"inet ${internal_ip}/24\""
-			echo "ifconfig_${internal_iface}_alias0=\"inet vhid 10 advskew ${carp1_skew} alias ${carp1_addr}\""
-			echo "ifconfig_${internal_iface}_alias1=\"inet vhid 20 advskew ${carp2_skew} alias ${carp2_addr}\""
+			local a=0
+			if [ -n "${ether}" ]; then
+				echo "ifconfig_${internal_iface}=\"ether ${ether}\""
+				echo "ifconfig_${internal_iface}_alias${a}=\"inet ${internal_ip}/24\""
+				a=$(( $a + 1 ))
+			else
+				echo "ifconfig_${internal_iface}=\"inet ${internal_ip}/24\""
+			fi
+			echo "ifconfig_${internal_iface}_alias${a}=\"inet vhid 10 advskew ${carp1_skew} alias ${carp1_addr}\""
+			a=$(( $a + 1 ))
+			echo "ifconfig_${internal_iface}_alias${a}=\"inet vhid 20 advskew ${carp2_skew} alias ${carp2_addr}\""
+			a=$(( $a + 1 ))
 		fi
 	fi
 
@@ -483,6 +497,10 @@ _gen_conf()
 	fi
 
 	if [ "$(${FREENAS_SQLITE_CMD} ${FREENAS_CONFIG} "SELECT srv_enable from services_services WHERE srv_service = 'nfs'")" = 1 ]; then
+
+		if ! is_freenas; then
+			echo "vaaiserver_enable=\"YES\""
+		fi
 
 		# NFS service is enabled
 		if [ "$(${FREENAS_SQLITE_CMD} ${FREENAS_CONFIG} "SELECT nfs_srv_v4 FROM services_nfs")" = 1 ]; then

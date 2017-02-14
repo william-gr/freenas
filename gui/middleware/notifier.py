@@ -58,6 +58,7 @@ import stat
 from subprocess import Popen, PIPE
 import subprocess
 import sys
+import tarfile
 import tempfile
 import time
 import types
@@ -263,6 +264,10 @@ class notifier:
     def reload(self, what):
         with client as c:
             return c.call('service.reload', what, {'onetime': False})
+
+    def clear_activedirectory_config(self):
+        with client as c:
+            return c.call('service._clear_activedirectory_config')
 
     """
     The following plugins methods violate the service layer
@@ -799,14 +804,6 @@ class notifier:
         altroot = 'none' if path else '/mnt'
         mountpoint = path if path else ('/%s' % (z_name, ))
 
-        larger_ashift = 0
-        try:
-            larger_ashift = int(self.sysctl("vfs.zfs.vdev.larger_ashift_minimal"))
-        except AssertionError:
-            pass
-        if larger_ashift == 0:
-            self._system("/sbin/sysctl vfs.zfs.vdev.larger_ashift_minimal=1")
-
         p1 = self._pipeopen(
             "zpool create -o cachefile=/data/zfs/zpool.cache "
             "-o failmode=continue "
@@ -817,10 +814,6 @@ class notifier:
         if p1.wait() != 0:
             error = ", ".join(p1.communicate()[1].split('\n'))
             raise MiddlewareError('Unable to create the pool: %s' % error)
-
-        # Restore previous larger ashift state.
-        if larger_ashift == 0:
-            self._system("/sbin/sysctl vfs.zfs.vdev.larger_ashift_minimal=0")
 
         # We've our pool, lets retrieve the GUID
         p1 = self._pipeopen("zpool get guid %s" % z_name)
@@ -864,20 +857,8 @@ class notifier:
         vdevs = self.__prepare_zfs_vdev(group['disks'], swapsize, encrypt, volume)
         z_vdev += " ".join([''] + vdevs)
 
-        larger_ashift = 0
-        try:
-            larger_ashift = int(self.sysctl("vfs.zfs.vdev.larger_ashift_minimal"))
-        except AssertionError:
-            pass
-        if larger_ashift == 0:
-            self._system("/sbin/sysctl vfs.zfs.vdev.larger_ashift_minimal=1")
-
         # Finally, attach new groups to the zpool.
         self._system("zpool add -f %s %s" % (z_name, z_vdev))
-
-        # Restore previous larger ashift state.
-        if larger_ashift == 0:
-            self._system("/sbin/sysctl vfs.zfs.vdev.larger_ashift_minimal=0")
 
         # TODO: geli detach -l
         self.reload('disk')
@@ -962,7 +943,7 @@ class notifier:
             user = repl.repl_remote.ssh_remote_dedicateduser
         else:
             user = 'root'
-        proc = self._pipeopen('/usr/bin/ssh -i /data/ssh/replication -o ConnectTimeout=3 -p %s "%s"@"%s" "zfs list -Ht snapshot -o name"' % (
+        proc = self._pipeopen('/usr/local/bin/ssh -i /data/ssh/replication -o ConnectTimeout=3 -o BatchMode=yes -o StrictHostKeyChecking=yes -p %s "%s"@"%s" "zfs list -Ht snapshot -o name"' % (
             repl.repl_remote.ssh_remote_port,
             user,
             repl.repl_remote.ssh_remote_hostname,
@@ -1120,20 +1101,6 @@ class notifier:
                     EncryptedDisk.objects.filter(encrypted_volume=volume, encrypted_disk=from_diskobj[0]).delete()
                 devname = self.__encrypt_device("gptid/%s" % uuid[0].text, to_disk, volume, passphrase=passphrase)
 
-        use_ashift = 0
-        try:
-            if zfs.zfs_ashift_from_label(str(volume.vol_name), from_label) == 12:
-                use_ashift = 1
-        except:
-            log.warn('Failed to get ashift', exc_info=True)
-        larger_ashift = 1
-        try:
-            larger_ashift = int(self.sysctl("vfs.zfs.vdev.larger_ashift_minimal"))
-        except AssertionError:
-            pass
-        if larger_ashift != use_ashift:
-            self._system("/sbin/sysctl vfs.zfs.vdev.larger_ashift_minimal={}".format(use_ashift))
-
         if force:
             try:
                 self.disk_wipe(devname.replace('/dev/', ''), mode='quick')
@@ -1160,10 +1127,6 @@ class notifier:
             if encrypt:
                 self._system('/sbin/geli detach %s' % (devname, ))
             raise MiddlewareError('Disk replacement failed: "%s"' % error)
-
-        # Restore previous larger ashift state.
-        if larger_ashift != use_ashift:
-            self._system("/sbin/sysctl vfs.zfs.vdev.larger_ashift_minimal={}".format(larger_ashift))
 
         if to_swap:
             self._system('/sbin/geli onetime /dev/%s' % (to_swap))
@@ -1463,7 +1426,7 @@ class notifier:
                               the user.
             MiddlewareError - failed to run pw useradd successfully.
         """
-        command = '/usr/sbin/pw useradd "%s" -o -c "%s" -d "%s" -s "%s"' % \
+        command = '/usr/sbin/pw useradd -n "%s" -o -c "%s" -d "%s" -s "%s"' % \
             (username, fullname, homedir, shell, )
         if password_disabled:
             command += ' -h -'
@@ -3074,7 +3037,7 @@ class notifier:
             systemdataset, basename = self.system_dataset_settings()
 
         if replications is None:
-            replications  = {}
+            replications = {}
 
         zfsproc = self._pipeopen("/sbin/zfs list -t volume -o name %s -H" % sort)
         zvols = set(filter(lambda y: y != '', zfsproc.communicate()[0].split('\n')))
@@ -3179,6 +3142,22 @@ class notifier:
             with open(config_file_name, 'wb') as config_file_fd:
                 for chunk in uploaded_file_fd.chunks():
                     config_file_fd.write(chunk)
+
+            """
+            First we try to open the file as a tar file.
+            We expect the tar file to contain at least the freenas-v1.db.
+            It can also contain the pwenc_secret file.
+            If we cannot open it as a tar, we try to proceed as it was the
+            raw database file.
+            """
+            try:
+                with tarfile.open(config_file_name) as tar:
+                    bundle = True
+                    tmpdir = tempfile.mkdtemp(dir='/var/tmp/firmware')
+                    tar.extractall(path=tmpdir)
+                    config_file_name = os.path.join(tmpdir, 'freenas-v1.db')
+            except tarfile.ReadError:
+                bundle = False
             conn = sqlite3.connect(config_file_name)
             try:
                 cur = conn.cursor()
@@ -3205,6 +3184,11 @@ class notifier:
             return False, _('The uploaded file is not valid.')
 
         shutil.move(config_file_name, '/data/uploaded.db')
+        if bundle:
+            secret = os.path.join(tmpdir, 'pwenc_secret')
+            if os.path.exists(secret):
+                shutil.move(secret, PWENC_FILE_SECRET)
+
         # Now we must run the migrate operation in the case the db is older
         open(NEED_UPDATE_SENTINEL, 'w+').close()
 
@@ -4168,7 +4152,7 @@ class notifier:
                 if not qs.exists():
                     ed = EncryptedDisk()
                     ed.encrypted_volume = vol
-                    ed.encrypted_provider = dev[:-4]
+                    ed.encrypted_provider = prov
                     disk = Disk.objects.filter(disk_name=dev.disk, disk_enabled=True)
                     if disk.exists():
                         disk = disk[0]
@@ -5417,16 +5401,18 @@ class notifier:
         from freenasUI.common.system import backup_database
         backup_database()
 
-    def fc_enabled(self, iscsi=None):
+    def alua_enabled(self):
+        if self.is_freenas() or not self.failover_licensed():
+            return False
         ret = None
         from freenasUI.support.utils import fc_enabled
-        if iscsi:
-            from freenasUI.services.models import iSCSITargetGlobalConfiguration
-            qs = iSCSITargetGlobalConfiguration.objects.all()
-            if qs:
-                ret = qs[0].iscsi_alua
-                return fc_enabled() or ret
-        return fc_enabled()
+        if fc_enabled():
+            return True
+        from freenasUI.services.models import iSCSITargetGlobalConfiguration
+        qs = iSCSITargetGlobalConfiguration.objects.all()
+        if qs:
+            return qs[0].iscsi_alua
+        return False
 
 
 def crypt_makeSalt():
