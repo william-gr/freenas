@@ -452,7 +452,7 @@ class Volume(Model):
             self.vol_encryptkey = str(uuid.uuid4())
         super(Volume, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s (%s)" % (self.vol_name, self.vol_fstype)
 
     def _get__zplist(self):
@@ -577,7 +577,7 @@ class Scrub(Model):
         verbose_name_plural = _("Scrubs")
         ordering = ["scrub_volume__vol_name"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.scrub_volume.vol_name
 
     def get_human_minute(self):
@@ -777,7 +777,7 @@ class Disk(Model):
         verbose_name_plural = _("Disks")
         ordering = ["disk_subsystem", "disk_number"]
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.disk_name)
 
 
@@ -836,7 +836,7 @@ class ReplRemote(Model):
         notifier().reload("ssh")
         return rv
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s:%s" % (self.ssh_remote_hostname, self.ssh_remote_port)
 
 
@@ -909,7 +909,7 @@ class Replication(Model):
         verbose_name_plural = _("Replication Tasks")
         ordering = ["repl_filesystem"]
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s -> %s:%s' % (
             self.repl_filesystem,
             self.repl_remote.ssh_remote_hostname,
@@ -1038,7 +1038,7 @@ class Task(Model):
         verbose_name=_("Enabled"),
     )
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s - every %s - %d%s' % (
             self.task_filesystem,
             self.get_task_interval_display(),
@@ -1101,7 +1101,7 @@ class VMWarePlugin(Model):
         verbose_name = _('VMware-Snapshot')
         verbose_name_plural = _('VMware-Snapshots')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.hostname
 
     def set_password(self, passwd):
