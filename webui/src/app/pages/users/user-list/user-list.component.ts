@@ -24,7 +24,7 @@ export class UserListComponent extends EntityListComponent {
     {title: 'Username', name: 'bsdusr_username'},
     {title: 'UID', name: 'bsdusr_uid'},
     {title: 'GID', name: 'bsdusr_group'},
-    {title: 'Homedir', name: 'bsdusr_homedir'},
+    {title: 'Home directory', name: 'bsdusr_home'},
     {title: 'Shell', name: 'bsdusr_shell'},
     {title: 'Builtin', name: 'bsdusr_builtin'},
   ];

@@ -11,27 +11,27 @@ import { EntityEditComponent } from '../../common/entity/entity-edit/index';
 })
 export class UserEditComponent extends EntityEditComponent {
 
-  protected resource_name: string = 'user';
-  protected route_delete: string[] = ['user', 'delete'];
-  protected route_success: string[] = ['user'];
+  protected resource_name: string = 'account/users';
+  protected route_delete: string[] = ['users', 'delete'];
+  protected route_success: string[] = ['users'];
 
   public groups: any[];
   public shells: any[];
 
   constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef) {
     super(router, route, rest, _injector, _appRef);
-    this.rest.get('group', {}).subscribe((res) => {
+    this.rest.get('account/groups/', {}).subscribe((res) => {
       this.groups = res.data;
     });
-    this.rest.openapi.subscribe(data => {
-      this.shells = data['paths']['/user']['post']['parameters'][0]['schema']['properties']['shell']['enum'];
-      this.data['shell'] = this.shells[0];
-    })
+    this.shells = [
+      '/bin/sh'
+    ];
+    this.data['bsdusr_shell'] = this.shells[0];
   }
 
   clean_uid(value) {
     if(value['uid'] == null) {
-      delete value['uid'];
+      delete value['bsdusr_uid'];
     }
     return value;
   }
@@ -39,13 +39,13 @@ export class UserEditComponent extends EntityEditComponent {
   clean(data) {
     delete data['groups'];
     if(data['builtin']) {
-      delete data['gecos'];
-      delete data['homedir'];
-      delete data['username'];
-      delete data['gid'];
-      delete data['uid'];
+      delete data['bsdusr_gecos'];
+      delete data['bsdusr_homedir'];
+      delete data['bsdusr_username'];
+      delete data['bsdusr_gid'];
+      delete data['bsdusr_uid'];
     }
-    delete data['builtin'];
+    delete data['bsdusr_builtin'];
     return data;
   }
 

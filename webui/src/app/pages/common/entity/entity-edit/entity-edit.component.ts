@@ -2,10 +2,6 @@ import { ApplicationRef, Component, Injector, OnDestroy, OnInit } from '@angular
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { MdButton } from '@angular2-material/button/button';
-import { MdCheckbox } from '@angular2-material/checkbox/checkbox';
-import { MdInput } from '@angular2-material/input/input';
-
 import { RestService } from '../../../../services/rest.service';
 
 import * as _ from 'lodash';
@@ -29,7 +25,7 @@ export abstract class EntityEditComponent implements OnInit, OnDestroy {
 
     this.sub = this.route.params.subscribe(params => {
       this.pk = params['pk'];
-      this.rest.get(this.resource_name + '/' + params['pk'], {}).subscribe((res) => {
+      this.rest.get(this.resource_name + '/' + params['pk'] + '/', {}).subscribe((res) => {
         this.data = res.data;
       })
     });
@@ -40,7 +36,7 @@ export abstract class EntityEditComponent implements OnInit, OnDestroy {
   }
 
   gotoDelete() {
-    this.router.navigate(new Array('/dashboard').concat(this.route_delete).concat(this.pk));
+    this.router.navigate(new Array('/pages').concat(this.route_delete).concat(this.pk));
   }
 
   doSubmit() {
@@ -57,7 +53,7 @@ export abstract class EntityEditComponent implements OnInit, OnDestroy {
     }
     value = this.clean(value);
 
-    this.rest.put(this.resource_name + '/' + this.pk, {
+    this.rest.put(this.resource_name + '/' + this.pk + '/', {
       body: JSON.stringify(value),
     }).subscribe((res) => {
       this.router.navigate(new Array('/dashboard').concat(this.route_success));

@@ -19,7 +19,7 @@ export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.pk = params['pk'];
-      this.rest.get(this.resource_name + '/' + this.pk, {}).subscribe((res) => {
+      this.rest.get(this.resource_name + '/' + this.pk + '/', {}).subscribe((res) => {
         this.data = res.data;
       }, () => {
         alert("Ooops! Failed to get!");
@@ -33,7 +33,7 @@ export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
 
   doSubmit() {
     this.rest.delete(this.resource_name + '/' + this.pk, {}).subscribe((res) => {
-      this.router.navigate(new Array('/dashboard').concat(this.route_success));
+      this.router.navigate(new Array('/pages').concat(this.route_success));
     }, (res) => {
       if(res.error.exception_class == 'ValidationErrors') {
         res.error.errors.forEach((item, i) => {
