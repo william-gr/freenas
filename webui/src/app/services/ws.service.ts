@@ -79,7 +79,6 @@ export class WebSocketService {
       "method": method,
       "params": params
     };
-    console.log(payload);
 
     this.pendingCalls.set(uuid, {
         "method": method,
