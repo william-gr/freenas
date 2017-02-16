@@ -32,7 +32,6 @@ export class WebSocketService {
   }
 
   onopen(event) {
-    this.connected = true;
     this.onOpenSubject.next(true);
     this.socket.send(JSON.stringify({
       "msg": "connect",
@@ -63,6 +62,8 @@ export class WebSocketService {
         console.log("Error: ", data.error);
       }
       call.callback(data.result);
+    } else if(data.msg == "connected") {
+      this.connected = true;
     } else {
       console.log("Unknown message: ", data);
     }
