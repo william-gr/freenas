@@ -32,6 +32,7 @@ export class Login {
 
   public onSubmit(values:Object):void {
     this.submitted = true;
+    this.failed = false;
     if (this.form.valid) {
       this._ws.login(this.username.value, this.password.value, this.loginCallback.bind(this));
     }
