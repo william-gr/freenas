@@ -19,7 +19,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Users',
-            icon: 'ion-android-home',
+            icon: 'ion-person',
             selected: false,
             expanded: false,
             order: 0
@@ -31,7 +31,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Groups',
-            icon: 'ion-android-home',
+            icon: 'ion-person-stalker',
             selected: false,
             expanded: false,
             order: 0
