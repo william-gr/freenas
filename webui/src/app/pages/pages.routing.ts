@@ -7,6 +7,7 @@ import { AuthGuard }           from './login/auth-guard.service';
 // export function loadChildren(path) { return System.import(path); };
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
     loadChildren: 'app/pages/login/login.module#LoginModule'
@@ -19,6 +20,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
       { path: 'users', loadChildren: 'app/pages/users/users.module#UsersModule' },
+      { path: 'groups', loadChildren: 'app/pages/groups/groups.module#GroupsModule' },
     ]
   }
 ];
