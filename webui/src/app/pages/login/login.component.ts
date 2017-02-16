@@ -33,7 +33,7 @@ export class Login {
   public onSubmit(values:Object):void {
     this.submitted = true;
     if (this.form.valid) {
-      this._ws.call('auth.login', [this.username.value, this.password.value], this.loginCallback.bind(this));
+      this._ws.login(this.username.value, this.password.value, this.loginCallback.bind(this));
     }
   }
 

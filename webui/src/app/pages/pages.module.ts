@@ -5,6 +5,7 @@ import { FormsModule }   from '@angular/forms';
 import { routing }       from './pages.routing';
 import { NgaModule } from '../theme/nga.module';
 
+import { AuthGuard }     from './login/auth-guard.service';
 import { Pages } from './pages.component';
 
 import { RestService, WebSocketService } from '../services/index';
@@ -14,7 +15,7 @@ import { RestService, WebSocketService } from '../services/index';
     CommonModule, NgaModule, FormsModule, routing
   ],
   declarations: [Pages],
-  providers: [WebSocketService, RestService]
+  providers: [AuthGuard, WebSocketService, RestService]
 })
 export class PagesModule {
 }

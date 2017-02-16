@@ -11,6 +11,7 @@ export class WebSocketService {
   pendingCalls: any;
   socket: any;
   connected: boolean = false;
+  loggedIn: boolean = false;
 
   constructor() {
     this.onOpenSubject = new Subject();
@@ -83,6 +84,23 @@ export class WebSocketService {
 
     this.socket.send(JSON.stringify(payload));
 
+  }
+
+  login(username, password, callback) {
+    let me = this;
+    function doCallback(result) {
+        me.loginCallback(result);
+        if(callback) { callback(result) };
+    }
+    this.call('auth.login', [username, password], doCallback);
+  }
+
+  loginCallback(result) {
+    if(result === true) {
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+    }
   }
 
 }
