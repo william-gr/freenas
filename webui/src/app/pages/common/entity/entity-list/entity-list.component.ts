@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { GlobalState } from '../../../../global.state';
 import { RestService } from '../../../../services/rest.service';
 
 @Component({
@@ -27,7 +28,7 @@ export abstract class EntityListComponent implements OnInit {
     sorting: {columns: this.columns},
   };
 
-  constructor(protected rest: RestService, protected router: Router) { }
+  constructor(protected rest: RestService, protected router: Router, protected _state: GlobalState) { }
 
   ngOnInit() {
     this.getData();

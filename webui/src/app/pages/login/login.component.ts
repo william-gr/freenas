@@ -44,6 +44,7 @@ export class Login {
     } else {
       this.errorLogin();
     }
+    this.submitted = false;
   }
 
   successLogin() {

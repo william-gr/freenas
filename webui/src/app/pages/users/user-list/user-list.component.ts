@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RestService } from '../../../services/rest.service';
 
+import { GlobalState } from '../../../global.state';
 import { EntityListComponent } from '../../common/entity/entity-list/index';
 
 @Component({
@@ -15,8 +16,8 @@ export class UserListComponent extends EntityListComponent {
   protected route_add: string[] = ['users', 'add']
   protected route_edit: string[] = ['users', 'edit']
 
-  constructor(_rest: RestService, _router: Router) {
-    super(_rest, _router);
+  constructor(_rest: RestService, _router: Router, _state: GlobalState) {
+    super(_rest, _router, _state);
   }
 
   public columns:Array<any> = [

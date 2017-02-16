@@ -2,6 +2,7 @@ import { ApplicationRef, Component, Injector, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { GlobalState } from '../../../../global.state';
 import { RestService } from '../../../../services/rest.service';
 
 export abstract class EntityAddComponent implements OnInit {
@@ -12,8 +13,8 @@ export abstract class EntityAddComponent implements OnInit {
   public error: string;
   public data: Object = {};
 
-  constructor(protected router: Router, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef) {
-
+  constructor(protected router: Router, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef, protected _state: GlobalState) {
+    this._state.notifyDataChanged('menu.activeLink', {title: "Add"});
   }
 
   ngOnInit() {

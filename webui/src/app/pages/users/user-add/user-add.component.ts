@@ -2,6 +2,7 @@ import { ApplicationRef, Component, Injector, OnInit, ViewContainerRef } from '@
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { GlobalState } from '../../../global.state';
 import { RestService } from '../../../services/rest.service';
 import { EntityAddComponent } from '../../common/entity/entity-add/index';
 
@@ -17,8 +18,8 @@ export class UserAddComponent extends EntityAddComponent {
   public groups: any[];
   public shells: any[];
 
-  constructor(protected router: Router, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef) {
-    super(router, rest, _injector, _appRef);
+  constructor(protected router: Router, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef, _state: GlobalState) {
+    super(router, rest, _injector, _appRef, _state);
     this.rest.get('account/groups', {}).subscribe((res) => {
       this.groups = res.data;
     });
