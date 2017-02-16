@@ -18,7 +18,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
-      { path: 'users', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
+      { path: 'users', loadChildren: 'app/pages/users/users.module#UsersModule' },
     ]
   }
 ];
