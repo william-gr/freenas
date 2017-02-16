@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, ComponentResolver, Injector, OnDestroy, OnInit } from '@angular/core';
+import { ApplicationRef, Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -6,7 +6,7 @@ import { MdButton } from '@angular2-material/button/button';
 import { MdCheckbox } from '@angular2-material/checkbox/checkbox';
 import { MdInput } from '@angular2-material/input/input';
 
-import { RestService } from '../../../services/rest.service';
+import { RestService } from '../../../../services/rest.service';
 
 import * as _ from 'lodash';
 
@@ -21,7 +21,7 @@ export abstract class EntityEditComponent implements OnInit, OnDestroy {
   public error: string;
   public data: Object = {};
 
-  constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected _cr: ComponentResolver, protected _injector: Injector, protected _appRef: ApplicationRef) {
+  constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef) {
 
   }
 

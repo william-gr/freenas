@@ -1,11 +1,7 @@
-import { ApplicationRef, Component, ComponentResolver, Injector, OnDestroy, OnInit } from '@angular/core';
-import { Control, ControlGroup, Validators } from '@angular/common';
+import { ApplicationRef, Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { MdButton } from '@angular2-material/button/button';
-import { MdInput } from '@angular2-material/input/input';
-
-import { RestService } from '../../../services/rest.service';
+import { RestService } from '../../../../services/rest.service';
 
 export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
 
@@ -17,7 +13,7 @@ export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
   public error: string;
   public data: Object = {};
 
-  constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected _cr: ComponentResolver, protected _injector: Injector, protected _appRef: ApplicationRef) {
+  constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef) {
   }
 
   ngOnInit() {

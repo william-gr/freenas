@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router } from '@angular/router';
 import { EntityListComponent } from './entity-list/index';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-entity',
   templateUrl: 'entity.component.html',
-  styleUrls: ['entity.component.css'],
-  directives: [ROUTER_DIRECTIVES],
+  styleUrls: ['entity.component.css']
 })
 export class EntityComponent implements OnInit {
 
