@@ -20,13 +20,22 @@ export class UserAddComponent extends EntityAddComponent {
 
   constructor(protected router: Router, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef, _state: GlobalState) {
     super(router, rest, _injector, _appRef, _state);
-    this.rest.get('account/groups', {}).subscribe((res) => {
+    this.rest.get('account/groups/', {}).subscribe((res) => {
       this.groups = res.data;
+    });
+    this.rest.get(this.resource_name, {}).subscribe((res) => {
+      this.groups = res.data;
+      let uid = 999;
+      res.data.forEach((item, i) => {
+        if(item.bsdusr_uid > uid) uid = item.bsdusr_uid;
+      });
+      uid += 1;
+      this.data['bsdusr_uid'] = uid;
     });
     this.shells = [
       '/bin/sh',
     ]
-    this.data['shell'] = this.shells[0];
+    this.data['bsdusr_shell'] = this.shells[0];
   }
 
   clean_uid(value) {

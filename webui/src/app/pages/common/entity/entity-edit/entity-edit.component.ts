@@ -56,12 +56,16 @@ export abstract class EntityEditComponent implements OnInit, OnDestroy {
     this.rest.put(this.resource_name + '/' + this.pk + '/', {
       body: JSON.stringify(value),
     }).subscribe((res) => {
-      this.router.navigate(new Array('/dashboard').concat(this.route_success));
+      this.router.navigate(new Array('/pages').concat(this.route_success));
     }, (res) => {
-      if(res.error['exception_class'] == 'ValidationErrors') {
-        res.error.errors.forEach((item, i) => {
-          this.error = item[0] + ': ' + item[1];
-        });
+      if(res.code == 409) {
+        this.error = '';
+        for(let i in res.error) {
+          let field = res.error[i];
+          field.forEach((item, i) => {
+            this.error += item + '. ';
+          });
+        }
       }
     });
   }
