@@ -3,6 +3,8 @@ import { UUID } from 'angular2-uuid';
 
 import { Subject } from 'rxjs/Rx';
 
+import { Router } from '@angular/router';
+
 @Injectable()
 export class WebSocketService {
 
@@ -15,7 +17,7 @@ export class WebSocketService {
   username: string;
   password: string;
 
-  constructor() {
+  constructor(private _router: Router) {
     this.onOpenSubject = new Subject();
     this.onCloseSubject = new Subject();
     this.pendingCalls = new Map();
@@ -105,6 +107,13 @@ export class WebSocketService {
     } else {
       this.loggedIn = false;
     }
+  }
+
+  logout() {
+    this.loggedIn = false;
+    this.username = '';
+    this.password = '';
+    this._router.navigate(['/login']);
   }
 
 }
