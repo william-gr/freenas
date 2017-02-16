@@ -1,0 +1,48 @@
+<form (ngSubmit)="doSubmit()" #form="ngForm">
+  <div *ngIf="error">
+    {{ error }}
+  </div>
+  <table>
+    <tr>
+      <td>
+        <md-input placeholder="User ID" name="uid" [(ngModel)]="data.uid" [disabled]="data.builtin"></md-input>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <md-input placeholder="Username" name="username" [(ngModel)]="data.username" required [disabled]="data.builtin"></md-input>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Primary Group: <select #gid placeholder="Group" name="gid" [(ngModel)]="data.gid" [disabled]="data.builtin">
+          <option value="">----</option>
+          <option *ngFor="let group of groups" [value]="group.gid">{{ group.name }}</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <md-input placeholder="Password" name="password" [(ngModel)]="data.password"></md-input>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Shell: <select placeholder="Shell" name="shell" [(ngModel)]="data.shell" required>
+          <option *ngFor="let shell of shells" [value]="shell">{{ shell }}</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <md-input placeholder="Homedir" name="homedir" [(ngModel)]="data.homedir" [disabled]="data.builtin"></md-input>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Update</button>
+        <button md-raised-button *ngIf="!data.builtin" color="accent" (click)="gotoDelete()">Delete</button>
+      </td>
+    </tr>
+  </table>
+</form>

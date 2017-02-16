@@ -1,0 +1,13 @@
+<form (ngSubmit)="doSubmit()">
+  <div *ngIf="error">
+    {{ error }}
+  </div>
+<table>
+  <tbody id="tbody">
+ </tbody>
+ <tr>
+   <button md-raised-button color="primary" type="submit">Update</button>
+   <button *ngIf="route_delete" md-raised-button color="warn" type="button" (click)="gotoDelete()">Delete</button>
+ </tr>
+</table>
+</form>

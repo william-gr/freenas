@@ -1,0 +1,53 @@
+<form (ngSubmit)="doSubmit()" class="form-horizontal" #form="ngForm">
+  <div *ngIf="error">
+    {{ error }}
+  </div>
+    <div class="form-group row">
+      <label for="inputUid" class="col-sm-2 control-label">UID</label>
+      <div class="col-sm-10">
+        <input id="inputUid" form-control-label placeholder="User ID" name="bsdusr_uid" [(ngModel)]="data.bsdusr_uid" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+      <div class="col-sm-10">
+        <input id="inputUsername" form-control-label placeholder="Username" name="bsdusr_username" [(ngModel)]="data.bsdusr_username" required class="form-control" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputFullname" class="col-sm-2 control-label">Full name</label>
+      <div class="col-sm-10">
+        <input id="inputFullname" form-control-label placeholder="Full name" name="bsdusr_full_name" [(ngModel)]="data.bsdusr_full_name" required class="form-control" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputGroup" class="col-sm-2 control-label">Group</label>
+      <div class="col-sm-10">
+        <select id="inputGroup" #gid placeholder="Group" name="bsdusr_gid" [(ngModel)]="data.bsdusr_group" [disabled]="creategroup.checked" class="form-control">
+          <option value="">----</option>
+          <option *ngFor="let group of groups" [value]="group.id">{{ group.bsdgrp_group }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputCreateGroup" class="col-sm-2 control-label">Create Group</label>
+      <div class="col-sm-10">
+        <input id="inputCreateGroup" type="checkbox" form-control-label #creategroup name="bsdusr_create_group" [(ngModel)]="data.bsdusr_create_group" [disabled]="gid.value" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+      <div class="col-sm-10">
+        <input id="inputPassword" placeholder="Password" name="bsdusr_password" [(ngModel)]="data.bsdusr_password" required class="form-control" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputShell" class="col-sm-2 control-label">Shell</label>
+      <div class="col-sm-10">
+        <select id="inputShell" placeholder="Shell" name="shell" [(ngModel)]="data.bsdusr_shell" required class="form-control">
+          <option *ngFor="let shell of shells" [value]="shell">{{ shell }}</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" [disabled]="!form.valid" class="btn btn-default btn-auth">Add</button>
+</form>
