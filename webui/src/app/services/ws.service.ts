@@ -4,6 +4,7 @@ import { UUID } from 'angular2-uuid';
 import { Subject } from 'rxjs/Rx';
 
 import { Router } from '@angular/router';
+import { LocalStorage } from 'ng2-webstorage';
 
 @Injectable()
 export class WebSocketService {
@@ -14,8 +15,9 @@ export class WebSocketService {
   socket: any;
   connected: boolean = false;
   loggedIn: boolean = false;
-  username: string;
-  password: string;
+  @LocalStorage() username;
+  @LocalStorage() password;
+  redirectUrl: string = '';
 
   constructor(private _router: Router) {
     this.onOpenSubject = new Subject();

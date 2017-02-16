@@ -30,6 +30,12 @@ export class Login {
     this.password = this.form.controls['password'];
   }
 
+  ngOnInit() {
+    if(this._ws.username && this._ws.password && this._ws.redirectUrl) {
+      this._ws.login(this._ws.username, this._ws.password, this.loginCallback.bind(this));
+    }
+  }
+
   public onSubmit(values:Object):void {
     this.submitted = true;
     this.failed = false;
@@ -48,7 +54,12 @@ export class Login {
   }
 
   successLogin() {
-    this._router.navigate(['/pages', 'dashboard']);
+    if(this._ws.redirectUrl) {
+      this._router.navigateByUrl(this._ws.redirectUrl);
+      this._ws.redirectUrl = '';
+    } else {
+      this._router.navigate(['/pages', 'dashboard']);
+    }
   }
 
   errorLogin() {
