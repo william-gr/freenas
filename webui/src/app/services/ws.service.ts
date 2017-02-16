@@ -12,6 +12,8 @@ export class WebSocketService {
   socket: any;
   connected: boolean = false;
   loggedIn: boolean = false;
+  username: string;
+  password: string;
 
   constructor() {
     this.onOpenSubject = new Subject();
@@ -88,6 +90,8 @@ export class WebSocketService {
 
   login(username, password, callback) {
     let me = this;
+    this.username = username;
+    this.password = password;
     function doCallback(result) {
         me.loginCallback(result);
         if(callback) { callback(result) };

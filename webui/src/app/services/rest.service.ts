@@ -6,6 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 
+import { WebSocketService } from './ws.service';
+
 @Injectable()
 export class RestService {
 
@@ -13,7 +15,7 @@ export class RestService {
   private baseUrl: string = "/api/v1.0/";
   public openapi: Observable<Object>;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private ws: WebSocketService) {
     let self = this;
     this.http = http;
     this.openapi = Observable.create(function(observer) {
@@ -51,6 +53,7 @@ export class RestService {
   request(method: RequestMethod, path: string, options: Object) {
     let headers = new Headers({
       'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa(this.ws.username + ':' + this.ws.password)
     });
     let requestOptions:Object = Object.assign({
       method: method,
