@@ -71,6 +71,10 @@ export abstract class EntityListComponent implements OnInit {
     this.getData();
   }
 
+  rowValue(row, attr) {
+    return row[attr];
+  }
+
   doAdd() {
     this.router.navigate(new Array('/pages').concat(this.route_add));
   }

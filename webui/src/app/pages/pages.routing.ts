@@ -21,6 +21,7 @@ export const routes: Routes = [
       { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
       { path: 'users', loadChildren: 'app/pages/users/users.module#UsersModule' },
       { path: 'groups', loadChildren: 'app/pages/groups/groups.module#GroupsModule' },
+      { path: 'interfaces', loadChildren: 'app/pages/interfaces/interfaces.module#InterfacesModule' },
     ]
   }
 ];

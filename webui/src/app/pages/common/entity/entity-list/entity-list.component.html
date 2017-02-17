@@ -26,7 +26,7 @@ class="pagination-sm"
   </thead>
   <tbody>
    <tr *ngFor="let i of rows" (click)="doEdit(i.id)">
-     <td *ngFor="let c of columns"><a>{{ i[c.name] }}</a></td>
+     <td *ngFor="let c of columns"><a>{{ rowValue(i, c.name) }}</a></td>
    </tr>
   </tbody>
 </table>

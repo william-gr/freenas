@@ -37,7 +37,19 @@ export const PAGES_MENU = [
             order: 0
           }
         }
-      }
+      },
+      {
+        path: 'interfaces',
+        data: {
+          menu: {
+            title: 'Interfaces',
+            icon: 'ion-network',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
+      },
     ]
   }
 ];
