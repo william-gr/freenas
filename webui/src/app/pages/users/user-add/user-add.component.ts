@@ -2,11 +2,7 @@ import { ApplicationRef, Component, Injector, OnInit, ViewContainerRef } from '@
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { DynamicFormControlModel, DynamicFormService,
-    DynamicCheckboxModel,
-    DynamicInputModel,
-    DynamicSelectModel,
-    DynamicRadioGroupModel } from '@ng2-dynamic-forms/core';
+import { DynamicFormControlModel, DynamicFormService, DynamicCheckboxModel, DynamicInputModel, DynamicSelectModel, DynamicRadioGroupModel } from '@ng2-dynamic-forms/core';
 import { GlobalState } from '../../../global.state';
 import { RestService } from '../../../services/rest.service';
 import { EntityAddComponent } from '../../common/entity/entity-add/index';

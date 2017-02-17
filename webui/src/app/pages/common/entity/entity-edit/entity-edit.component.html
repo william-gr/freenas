@@ -1,13 +1,15 @@
-<form (ngSubmit)="doSubmit()">
-  <div *ngIf="error">
-    {{ error }}
+<ba-card>
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div *ngIf="error" [innerHTML]="error" class="form-error">
   </div>
-<table>
-  <tbody id="tbody">
- </tbody>
- <tr>
-   <button md-raised-button color="primary" type="submit">Update</button>
-   <button *ngIf="route_delete" md-raised-button color="warn" type="button" (click)="gotoDelete()">Delete</button>
- </tr>
-</table>
+
+    <dynamic-form-bootstrap-control *ngFor="let controlModel of formModel"
+                                    [controlGroup]="formGroup"
+                                    [model]="controlModel"
+                                    [hasErrorMessaging]="controlModel.hasErrorMessages">
+    </dynamic-form-bootstrap-control>
+   <button class="btn btn-primary" type="submit">Update</button>
+   <button *ngIf="route_delete" class="btn btn-danger" type="button" (click)="gotoDelete()">Delete</button>
+
 </form>
+</ba-card>

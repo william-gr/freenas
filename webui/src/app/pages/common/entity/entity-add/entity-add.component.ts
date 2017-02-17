@@ -12,7 +12,6 @@ export abstract class EntityAddComponent implements OnInit {
   protected resource_name: string;
   protected formGroup: FormGroup;
   protected formModel: DynamicFormControlModel[];
-  public fields: Array<any> = [];
   public error: string;
   public data: Object = {};
 
@@ -46,11 +45,12 @@ export abstract class EntityAddComponent implements OnInit {
 	this.error = '';
         for(let i in res.error) {
 	  let field = res.error[i];
-	  console.log(field, this.formGroup);
           field.forEach((item, j) => {
 	    let fc = this.formService.findById(i, this.formModel);
 	    if(fc) {
 	      this.error += fc.label + ': ' + item + '<br />';
+	    } else {
+	      this.error += item + '<br />';
 	    }
           });
 	}
