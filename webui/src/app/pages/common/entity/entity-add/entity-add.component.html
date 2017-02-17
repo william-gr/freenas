@@ -1,12 +1,12 @@
-<form (ngSubmit)="doSubmit()">
+<ba-card>
+<form [formGroup]="formGroup">
+
+    <dynamic-form-bootstrap-control *ngFor="let controlModel of formModel"
+                                    [controlGroup]="formGroup"
+                                    [model]="controlModel"></dynamic-form-bootstrap-control>
+   <button class="btn btn-primary" type="submit">Add</button>
+</form>
+</ba-card>
   <div *ngIf="error">
     {{ error }}
   </div>
-<table>
-  <tbody id="tbody">
- </tbody>
- <tr>
-   <button md-raised-button color="primary" type="submit">Add</button>
- </tr>
-</table>
-</form>

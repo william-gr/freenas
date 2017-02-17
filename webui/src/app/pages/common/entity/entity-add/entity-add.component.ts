@@ -1,6 +1,7 @@
 import { ApplicationRef, Component, Injector, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DynamicFormControlModel, DynamicFormService } from '@ng2-dynamic-forms/core';
 
 import { GlobalState } from '../../../../global.state';
 import { RestService } from '../../../../services/rest.service';
@@ -9,16 +10,18 @@ export abstract class EntityAddComponent implements OnInit {
 
   protected route_success: string[] = [];
   protected resource_name: string;
+  protected formGroup: FormGroup;
+  protected formModel: DynamicFormControlModel[];
   public fields: Array<any> = [];
   public error: string;
   public data: Object = {};
 
-  constructor(protected router: Router, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef, protected _state: GlobalState) {
-    this._state.notifyDataChanged('menu.activeLink', {title: "Add"});
+  constructor(protected router: Router, protected rest: RestService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef, protected _state: GlobalState) {
+
   }
 
   ngOnInit() {
-
+    this.formGroup = this.formService.createFormGroup(this.formModel);
   }
 
   doSubmit() {
