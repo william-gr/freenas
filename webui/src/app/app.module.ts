@@ -18,6 +18,8 @@ import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
 
+import 'style-loader!angular2-busy/build/style/busy.css';
+
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
