@@ -68,16 +68,12 @@ export class RestService {
     let result:Object = new Object();
     let search:Array<String> = [];
     for(let i in options) {
-       if(i == 'limit') {
-         search.push("limit=" + options[i]);
-       }
-
        if(i == 'offset') {
          search.push("offset(" + options[i] + ")=");
-       }
-
-       if(i == 'sort') {
+       } else if(i == 'sort') {
          search.push("sort(" + options[i] + ")=");
+       } else {
+         search.push(i + "=" + options[i]);
        }
     }
     result['search'] = search.join("&");
