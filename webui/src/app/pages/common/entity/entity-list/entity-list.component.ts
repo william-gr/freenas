@@ -49,7 +49,7 @@ export abstract class EntityListComponent implements OnInit {
     }
 
     //options = {limit: this.itemsPerPage, offset: offset};
-    options = {};
+    options = {limit: 0};
     if(sort.length > 0) {
       options['sort'] = sort.join(',');
     }

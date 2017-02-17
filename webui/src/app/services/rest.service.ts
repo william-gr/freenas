@@ -69,7 +69,7 @@ export class RestService {
     let search:Array<String> = [];
     for(let i in options) {
        if(i == 'limit') {
-         search.push("limit(" + options[i] + ")=");
+         search.push("limit=" + options[i]);
        }
 
        if(i == 'offset') {
