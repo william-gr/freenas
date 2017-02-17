@@ -22,9 +22,12 @@ export abstract class EntityAddComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.formService.createFormGroup(this.formModel);
+    this.afterInit();
   }
 
-  doSubmit() {
+  afterInit() {}
+
+  onSubmit() {
     this.error = null;
     let value = this.data;
     for(let i in value) {
@@ -35,7 +38,7 @@ export abstract class EntityAddComponent implements OnInit {
     }
 
     this.rest.post(this.resource_name, {
-      body: JSON.stringify(value),
+      body: JSON.stringify(this.formGroup.value),
     }).subscribe((res) => {
       this.router.navigate(new Array('/pages').concat(this.route_success));
     }, (res) => {
@@ -43,8 +46,12 @@ export abstract class EntityAddComponent implements OnInit {
 	this.error = '';
         for(let i in res.error) {
 	  let field = res.error[i];
-          field.forEach((item, i) => {
-	    this.error += item + '. ';
+	  console.log(field, this.formGroup);
+          field.forEach((item, j) => {
+	    let fc = this.formService.findById(i, this.formModel);
+	    if(fc) {
+	      this.error += fc.label + ': ' + item + '<br />';
+	    }
           });
 	}
       }

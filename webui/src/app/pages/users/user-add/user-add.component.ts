@@ -24,6 +24,7 @@ export class UserAddComponent extends EntityAddComponent {
     new DynamicInputModel({
         id: 'bsdusr_uid',
         label: 'UID',
+	validators: {required: null},
     }),
     new DynamicInputModel({
         id: 'bsdusr_username',
@@ -37,35 +38,55 @@ export class UserAddComponent extends EntityAddComponent {
         id: 'bsdusr_email',
         label: 'Email',
     }),
+    new DynamicInputModel({
+        id: 'bsdusr_password',
+        label: 'Password',
+        inputType: 'password',
+    }),
     new DynamicSelectModel({
         id: 'bsdusr_group',
         label: 'Primary Group',
-	options: [
-	  {'label': 'test', 'value': 1}
-	]
+	options: [],
+    }),
+    new DynamicCheckboxModel({
+        id: 'bsdusr_creategroup',
+        label: 'Create Primary Group',
+    }),
+    new DynamicSelectModel({
+        id: 'bsdusr_shell',
+        label: 'Shell',
     }),
   ];
-  public groups: any[];
   public shells: any[];
+  private bsdusr_shell: DynamicSelectModel<string>;
+  private bsdusr_group: DynamicSelectModel<string>;
 
   constructor(protected router: Router, protected rest: RestService, protected formService: DynamicFormService,protected _injector: Injector, protected _appRef: ApplicationRef, _state: GlobalState) {
     super(router, rest, formService, _injector, _appRef, _state);
+  }
+
+  afterInit() {
     this.rest.get('account/groups/', {}).subscribe((res) => {
-      this.groups = res.data;
+      this.bsdusr_group = <DynamicSelectModel<string>> this.formService.findById("bsdusr_group", this.formModel);
+      res.data.forEach((item) => {
+        this.bsdusr_group.add({label: item.bsdgrp_group, value: item.bsdgrp_id});
+      });
+      this.bsdusr_group.valueUpdates.next();
     });
     this.rest.get(this.resource_name, {}).subscribe((res) => {
-      this.groups = res.data;
       let uid = 999;
       res.data.forEach((item, i) => {
         if(item.bsdusr_uid > uid) uid = item.bsdusr_uid;
       });
       uid += 1;
-      this.data['bsdusr_uid'] = uid;
+      this.formGroup.controls['bsdusr_uid'].setValue(uid);
     });
     this.shells = [
-      '/bin/sh',
+      {label: '/bin/sh', value: '/bin/sh'},
     ]
-    this.data['bsdusr_shell'] = this.shells[0];
+    this.bsdusr_shell = <DynamicSelectModel<string>> this.formService.findById("bsdusr_shell", this.formModel);
+    this.bsdusr_shell.options = this.shells;
+    this.formGroup.controls['bsdusr_shell'].setValue(this.shells[0]['value']);
   }
 
   clean_uid(value) {
