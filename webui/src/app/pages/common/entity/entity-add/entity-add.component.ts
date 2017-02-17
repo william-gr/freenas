@@ -6,6 +6,8 @@ import { DynamicFormControlModel, DynamicFormService } from '@ng2-dynamic-forms/
 import { GlobalState } from '../../../../global.state';
 import { RestService } from '../../../../services/rest.service';
 
+import { Subscription } from 'rxjs';
+
 export abstract class EntityAddComponent implements OnInit {
 
   protected route_success: string[] = [];
@@ -14,6 +16,8 @@ export abstract class EntityAddComponent implements OnInit {
   protected formModel: DynamicFormControlModel[];
   public error: string;
   public data: Object = {};
+
+  private busy: Subscription;
 
   constructor(protected router: Router, protected rest: RestService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef, protected _state: GlobalState) {
 
@@ -36,7 +40,7 @@ export abstract class EntityAddComponent implements OnInit {
       }
     }
 
-    this.rest.post(this.resource_name, {
+    this.busy = this.rest.post(this.resource_name, {
       body: JSON.stringify(this.formGroup.value),
     }).subscribe((res) => {
       this.router.navigate(new Array('/pages').concat(this.route_success));

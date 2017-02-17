@@ -18,7 +18,7 @@ class="pagination-sm"
 </pagination>
 -->
 
-<table class="table table-striped table-bordered dataTable" role="grid" style="width: 100%;">
+<table class="table table-striped table-bordered dataTable" role="grid" style="width: 100%;" [ngBusy]="busy">
  <thead>
    <tr role="row">
      <th *ngFor="let i of columns">{{ i.title }}</th>

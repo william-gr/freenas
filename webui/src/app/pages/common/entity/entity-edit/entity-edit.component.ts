@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DynamicFormControlModel, DynamicFormService } from '@ng2-dynamic-forms/core';
 import { RestService } from '../../../../services/rest.service';
 
+import { Subscription } from 'rxjs';
+
 import * as _ from 'lodash';
 
 export class EntityEditComponent implements OnInit, OnDestroy {
@@ -15,6 +17,8 @@ export class EntityEditComponent implements OnInit, OnDestroy {
   protected route_success: string[];
   protected formGroup: FormGroup;
   protected formModel: DynamicFormControlModel[];
+
+  private busy: Subscription;
 
   private sub: any;
   public error: string;
@@ -65,7 +69,7 @@ export class EntityEditComponent implements OnInit, OnDestroy {
     }
     value = this.clean(value);
 
-    this.rest.put(this.resource_name + '/' + this.pk + '/', {
+    this.busy = this.rest.put(this.resource_name + '/' + this.pk + '/', {
       body: JSON.stringify(value),
     }).subscribe((res) => {
       this.router.navigate(new Array('/pages').concat(this.route_success));

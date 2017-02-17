@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { RestService } from '../../../../services/rest.service';
 
+import { Subscription } from 'rxjs';
+
 export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
 
   protected pk: any;
@@ -12,6 +14,8 @@ export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
   private sub: any;
   public error: string;
   public data: Object = {};
+
+  private busy: Subscription;
 
   constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef) {
   }
@@ -32,7 +36,7 @@ export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
   }
 
   doSubmit() {
-    this.rest.delete(this.resource_name + '/' + this.pk, {}).subscribe((res) => {
+    this.busy = this.rest.delete(this.resource_name + '/' + this.pk, {}).subscribe((res) => {
       this.router.navigate(new Array('/pages').concat(this.route_success));
     }, (res) => {
       if(res.error.exception_class == 'ValidationErrors') {

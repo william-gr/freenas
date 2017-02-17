@@ -1,5 +1,5 @@
 <ba-card>
-<form>
+<form [ngBusy]="busy">
   <div *ngIf="error">
     {{ error }}
   </div>

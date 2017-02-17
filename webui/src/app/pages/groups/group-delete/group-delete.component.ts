@@ -11,8 +11,8 @@ import { EntityDeleteComponent } from '../../common/entity/entity-delete/index';
 })
 export class GroupDeleteComponent extends EntityDeleteComponent {
 
-  protected resource_name: string = 'group';
-  protected route_success: string[] = ['group'];
+protected resource_name: string = 'account/groups/';
+  protected route_success: string[] = ['groups'];
 
   constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected _injector: Injector, protected _appRef: ApplicationRef) {
     super(router, route, rest, _injector, _appRef);

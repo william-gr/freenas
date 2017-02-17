@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 import { DynamicFormsCoreModule } from '@ng2-dynamic-forms/core';
 import { DynamicFormsBootstrapUIModule } from '@ng2-dynamic-forms/ui-bootstrap';
+import { BusyModule } from 'angular2-busy';
 
 import { routing }       from './groups.routing';
 
@@ -14,6 +15,7 @@ import { GroupDeleteComponent } from './group-delete/';
 
 @NgModule({
   imports: [
+    BusyModule,
     DynamicFormsCoreModule.forRoot(),
     DynamicFormsBootstrapUIModule,
     CommonModule,

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 import { DynamicFormsCoreModule } from '@ng2-dynamic-forms/core';
 import { DynamicFormsBootstrapUIModule } from '@ng2-dynamic-forms/ui-bootstrap';
+import { BusyModule } from 'angular2-busy';
 
 import { routing }       from './users.routing';
 
@@ -14,6 +15,7 @@ import { UserDeleteComponent } from './user-delete/';
 
 @NgModule({
   imports: [
+    BusyModule,
     DynamicFormsCoreModule.forRoot(),
     DynamicFormsBootstrapUIModule,
     CommonModule,

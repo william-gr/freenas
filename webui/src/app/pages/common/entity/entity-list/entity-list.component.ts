@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { GlobalState } from '../../../../global.state';
 import { RestService } from '../../../../services/rest.service';
 
+import { Subscription } from 'rxjs';
+
 @Component({
   moduleId: module.id,
   selector: 'app-entity-list',
@@ -15,6 +17,8 @@ export abstract class EntityListComponent implements OnInit {
   protected resource_name: string;
   protected route_add: string[];
   protected route_edit: string[];
+
+  private busy: Subscription;
 
   public rows:Array<any> = [];
   public columns:Array<any> = [];
@@ -54,7 +58,7 @@ export abstract class EntityListComponent implements OnInit {
       options['sort'] = sort.join(',');
     }
 
-    this.rest.get(this.resource_name, options).subscribe((res) => {
+    this.busy = this.rest.get(this.resource_name, options).subscribe((res) => {
       this.length = res.total;
       this.rows = res.data;
     });
