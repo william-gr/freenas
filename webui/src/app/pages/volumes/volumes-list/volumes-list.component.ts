@@ -14,6 +14,7 @@ import { EntityListComponent } from '../../common/entity/entity-list/index';
 export class VolumesListComponent extends EntityListComponent {
 
   protected resource_name: string = 'storage/volume/';
+  protected route_add: string[] = ['volumes', 'manager'];
 
   constructor(_rest: RestService, _router: Router, _state: GlobalState) {
     super(_rest, _router, _state);

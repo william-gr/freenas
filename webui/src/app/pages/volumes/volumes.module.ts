@@ -8,13 +8,17 @@ import { BusyModule } from 'angular2-busy';
 
 import { routing }       from './volumes.routing';
 
+import { DragulaModule } from 'ng2-dragula';
+
 import { VolumesListComponent } from './volumes-list/';
+import { ManagerComponent, DiskComponent, VdevComponent } from './manager/';
 //import { VolumesAddComponent } from './volumes-add/';
 //import { VolumesEditComponent } from './volumes-edit/';
 //import { VolumesDeleteComponent } from './volumes-delete/';
 
 @NgModule({
   imports: [
+    DragulaModule,
     BusyModule,
     DynamicFormsCoreModule.forRoot(),
     DynamicFormsBootstrapUIModule,
@@ -26,6 +30,9 @@ import { VolumesListComponent } from './volumes-list/';
   ],
   declarations: [
     VolumesListComponent,
+    ManagerComponent,
+    DiskComponent,
+    VdevComponent,
     //VolumesAddComponent,
     //VolumesEditComponent,
     //VolumesDeleteComponent,

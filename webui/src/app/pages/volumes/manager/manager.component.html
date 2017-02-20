@@ -1,0 +1,45 @@
+<pre *ngIf="error" [style.color]="red">
+{{ error }}
+</pre>
+<table width="100%">
+  <tr>
+    <td colspan="3"><input [(ngModel)]="name" placeholder="Name" required/></td>
+    <td colspan="1" rowspan="2" [style.background]="'lightblue'">
+    <h3>Disks</h3>
+    <div [dragula]='"pool-vdev"' [style.background]="'lightgreen'" [style.minHeight]="'200px'">
+      <app-disk *ngFor="let disk of disks" [data]="disk"></app-disk>
+    </div>
+    </td>
+  </tr>
+  <tr>
+  <td colspan="3">
+    <p>Layout</p>
+    <div [style.background]="'paleturquoise'">
+    <h4>Data</h4>
+    <app-vdev *ngFor="let vdev of vdevs.data" [group]="'data'"></app-vdev>
+    <button (click)="addVdev('data')">
+        <ba-card class="md-16">add</ba-card>
+    </button>
+    </div>
+    <div [style.background]="'paleturquoise'">
+    <h4>Cache (L2ARC)</h4>
+    <app-vdev *ngFor="let vdev of vdevs.cache" [group]="'cache'"></app-vdev>
+    <button (click)="addVdev('cache')">
+        <ba-card class="md-16">add</ba-card>
+    </button>
+    </div>
+    <div [style.background]="'paleturquoise'">
+    <h4>Log (ZIL)</h4>
+    <app-vdev *ngFor="let vdev of vdevs.log" [group]="'log'"></app-vdev>
+    <button (click)="addVdev('log')">
+        <ba-card class="md-16">add</ba-card>
+    </button>
+    </div>
+  </td>
+  </tr>
+  <tr>
+    <td colspan="4">
+    <button class="btn btn-primary" (click)="doSubmit()">Create</button>
+    </td>
+  </tr>
+</table>
