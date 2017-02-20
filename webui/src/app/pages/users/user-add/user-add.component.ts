@@ -65,7 +65,7 @@ export class UserAddComponent extends EntityAddComponent {
     this.rest.get('account/groups/', {}).subscribe((res) => {
       this.bsdusr_group = <DynamicSelectModel<string>> this.formService.findById("bsdusr_group", this.formModel);
       res.data.forEach((item) => {
-        this.bsdusr_group.add({label: item.bsdgrp_group, value: item.bsdgrp_id});
+        this.bsdusr_group.add({label: item.bsdgrp_group, value: item.id});
       });
       this.bsdusr_group.valueUpdates.next();
     });
