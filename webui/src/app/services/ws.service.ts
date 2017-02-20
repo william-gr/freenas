@@ -48,6 +48,13 @@ export class WebSocketService {
     setTimeout(this.connect.bind(this), 5000);
   }
 
+  ping() {
+    if(this.connected) {
+      this.socket.send(JSON.stringify({"msg": "ping", "id": UUID.UUID()}));
+      setTimeout(this.ping.bind(this), 20000);
+    }
+  }
+
   onmessage(msg) {
 
     try {
@@ -66,6 +73,7 @@ export class WebSocketService {
       call.callback(data.result);
     } else if(data.msg == "connected") {
       this.connected = true;
+      setTimeout(this.ping.bind(this), 20000);
     } else {
       console.log("Unknown message: ", data);
     }

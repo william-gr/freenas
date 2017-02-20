@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { DynamicFormControlModel, DynamicFormService } from '@ng2-dynamic-forms/core';
 
 import { GlobalState } from '../../../../global.state';
-import { RestService } from '../../../../services/rest.service';
+import { RestService, WebSocketService } from '../../../../services/';
 
 import { Subscription } from 'rxjs';
 
@@ -19,7 +19,7 @@ export abstract class EntityAddComponent implements OnInit {
 
   private busy: Subscription;
 
-  constructor(protected router: Router, protected rest: RestService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef, protected _state: GlobalState) {
+  constructor(protected router: Router, protected rest: RestService, protected ws: WebSocketService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef, protected _state: GlobalState) {
 
   }
 
