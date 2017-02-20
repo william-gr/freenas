@@ -52,9 +52,9 @@ export class ManagerComponent implements OnInit {
 	}
       });
       this.vdevComponents.forEach((item) => {
-        if(destDom.parentNode.parentNode == item.elementRef.nativeElement) {
+        if(destDom == item.dnd.nativeElement) {
           destVdev = item;
-	} else if(srcDom.parentNode.parentNode == item.elementRef.nativeElement) {
+	} else if(srcDom == item.dnd.nativeElement) {
           srcVdev = item;
 	}
       });
@@ -89,27 +89,31 @@ export class ManagerComponent implements OnInit {
   doSubmit() {
     this.error = null;
 
-    let topology = {
-        'data': [],
-        'cache': [],
-        'log': [],
-        'spare': [],
-    }
+    let layout = []
     this.vdevComponents.forEach((vdev) => {
       let disks = [];
       vdev.getDisks().forEach((disk) => {
-	disks.push('/dev/' + disk.data.name);
+	disks.push('/dev/' + disk.data.devname);
       });
-      topology[vdev.group].push({type: vdev.type, disks: disks});
+      layout.push({vdevtype: vdev.type, disks: disks});
     });
-    this.rest.post("zpool", {
+    this.rest.post('storage/volume/', {
       body: JSON.stringify({
-        name: this.name,
-	topology: topology
+        volume_name: this.name,
+	layout: layout
       })
     }).subscribe((res) => {
-    this.router.navigate(['/dashboard', 'pool']);
-    }, (res) => {this.error = res.error.stacktrace});
+    this.router.navigate(['/pages', 'volumes']);
+    }, (res) => {
+      if(res.code == 409) {
+        this.error = '';
+        for(let i in res.error) {
+	  res.error[i].forEach((error) => {
+	    this.error += error + '<br />';
+	  });
+        }
+      }
+    });
   }
 
 }

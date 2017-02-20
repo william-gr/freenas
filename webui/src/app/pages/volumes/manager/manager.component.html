@@ -1,6 +1,4 @@
-<pre *ngIf="error" [style.color]="red">
-{{ error }}
-</pre>
+<div *ngIf="error" [style.color]="'red'" [innerHTML]="error"></div>
 <table width="100%">
   <tr>
     <td colspan="3"><input [(ngModel)]="name" class="form-control" placeholder="Name" required/></td>
@@ -26,7 +24,7 @@
     <td colspan="1" valign="top">
     <ba-card>
       <h3>Disks</h3>
-      <div [dragula]='"pool-vdev"' [style.minHeight]="'200px'">
+      <div [dragula]='"pool-vdev"' [style.minHeight]="'200px'" [style.width]="'200px'">
       <app-disk *ngFor="let disk of disks" [data]="disk"></app-disk>
       </div>
     </ba-card>

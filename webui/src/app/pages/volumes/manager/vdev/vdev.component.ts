@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, QueryList, ViewChildren, Type } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, Type } from '@angular/core';
 
 import { DragulaService } from 'ng2-dragula';
 import { DiskComponent } from '../disk/';
@@ -11,6 +11,7 @@ import { DiskComponent } from '../disk/';
 export class VdevComponent implements OnInit {
 
   @Input() group: string;
+  @ViewChild('dnd') dnd;
   public type: string = 'stripe';
   private diskComponents: Array<DiskComponent> = [];
 
