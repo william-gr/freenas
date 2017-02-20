@@ -23,6 +23,8 @@
 }
 
 a.al-logo {
+  width: 222px;
+  height: 73px;
   color: $sidebar-text;
   display: block;
   font-size: 24px;
@@ -31,6 +33,7 @@ a.al-logo {
   float: left;
   outline: none !important;
   line-height: 60px;
+  @include bg('freenas-logo.png');
 
   span {
     color: $primary;

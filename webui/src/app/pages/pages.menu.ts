@@ -50,6 +50,18 @@ export const PAGES_MENU = [
           }
         }
       },
+      {
+        path: 'volumes',
+        data: {
+          menu: {
+            title: 'Volumes',
+            icon: 'ion-cube',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
+      },
     ]
   }
 ];
