@@ -60,6 +60,10 @@ export class InterfacesAddComponent extends EntityAddComponent {
         id: 'int_dhcp',
         label: 'DHCP',
     }),
+    new DynamicInputModel({
+        id: 'int_options',
+        label: 'Options',
+    }),
   ];
 
   private int_interface: DynamicSelectModel<string>;

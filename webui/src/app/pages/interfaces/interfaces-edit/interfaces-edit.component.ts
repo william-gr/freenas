@@ -59,6 +59,10 @@ export class InterfacesEditComponent extends EntityEditComponent {
         id: 'int_dhcp',
         label: 'DHCP',
     }),
+    new DynamicInputModel({
+        id: 'int_options',
+        label: 'Options',
+    }),
   ];
 
   constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef) {
