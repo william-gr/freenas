@@ -39,4 +39,12 @@ export const PAGES_MENU = [
     expanded: false,
     order: 0
   },
+  {
+    path: ['services'],
+    title: 'Services',
+    icon: 'ion-cube',
+    selected: false,
+    expanded: false,
+    order: 0
+  },
 ];

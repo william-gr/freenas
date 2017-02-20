@@ -21,6 +21,7 @@ export const routes: Routes = [
       { path: 'groups', loadChildren: 'app/pages/groups/groups.module#GroupsModule' },
       { path: 'interfaces', loadChildren: 'app/pages/interfaces/interfaces.module#InterfacesModule' },
       { path: 'volumes', loadChildren: 'app/pages/volumes/volumes.module#VolumesModule' },
+      { path: 'services', loadChildren: 'app/pages/services/services.module#ServicesModule' },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ]
   },
