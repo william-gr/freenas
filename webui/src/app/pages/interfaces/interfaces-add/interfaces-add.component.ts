@@ -29,10 +29,32 @@ export class InterfacesAddComponent extends EntityAddComponent {
     new DynamicInputModel({
         id: 'int_ipv4address',
         label: 'IPv4 Address',
+        relation: [
+            {
+                action: "DISABLE",
+                when: [
+                    {
+                        id: "int_dhcp",
+                        value: true,
+                    }
+                ]
+            },
+        ],
     }),
     new DynamicInputModel({
         id: 'int_v4netmaskbit',
         label: 'IPv4 Netmask',
+        relation: [
+            {
+                action: "DISABLE",
+                when: [
+                    {
+                        id: "int_dhcp",
+                        value: true,
+                    }
+                ]
+            },
+        ],
     }),
     new DynamicCheckboxModel({
         id: 'int_dhcp',
