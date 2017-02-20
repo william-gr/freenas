@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { DragulaService } from 'ng2-dragula';
 
-import { RestService } from '../../../services/rest.service';
+import { WebSocketService, RestService } from '../../../services/';
 import { DiskComponent } from './disk/';
 import { VdevComponent } from './vdev/';
 
@@ -34,7 +34,7 @@ export class ManagerComponent implements OnInit {
 
   private name: string;
 
-  constructor(private rest: RestService, private router: Router, private dragulaService: DragulaService) {
+  constructor(private rest: RestService, private ws: WebSocketService, private router: Router, private dragulaService: DragulaService) {
     dragulaService.setOptions('pool-vdev', {
       accepts: (el, target, source, sibling) => {
 	return true;
@@ -74,8 +74,11 @@ export class ManagerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.rest.get("disk/get_unused_disks", {}).subscribe((res) => {
-      this.disks = res.data;
+    this.ws.call("notifier.get_disks", [], (res) => {
+      this.disks = []
+      for(let i in res) {
+        this.disks.push(res[i]);
+      }
     });
   }
 

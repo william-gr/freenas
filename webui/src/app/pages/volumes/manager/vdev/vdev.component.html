@@ -1,11 +1,11 @@
-<div>
-  <div [dragula]='"pool-vdev"' [style.minHeight]="'100px'" [style.width]="'500px'" [style.background]="'lightgreen'">
+<ba-card>
+  <div [dragula]='"pool-vdev"' [style.minHeight]="'100px'" [style.width]="'500px'">
   </div>
-  <select [(ngModel)]="type" (change)="onTypeChange($event)">
+  <select [(ngModel)]="type" (change)="onTypeChange($event)" class="form-control">
     <option value="stripe">Stripe</option>
     <option value="mirror">Mirror</option>
     <option value="raidz1">Raid-z</option>
     <option value="raidz2">Raid-z2</option>
     <option value="raidz3">Raid-z3</option>
   </select>
-</div>
+</ba-card>
