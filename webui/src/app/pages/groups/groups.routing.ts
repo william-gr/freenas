@@ -8,7 +8,7 @@ import { GroupDeleteComponent } from './group-delete/index';
 
 
 export const routes: Routes = [
-  { path: '', component: GroupListComponent },
+  { path: '', component: GroupListComponent, pathMatch: 'full' },
   { path: 'add', component: GroupAddComponent },
   { path: 'edit/:pk', component: GroupEditComponent },
   { path: 'delete/:pk', component: GroupDeleteComponent }

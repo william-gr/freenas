@@ -8,9 +8,9 @@ import { UserDeleteComponent } from './user-delete/index';
 
 
 export const routes: Routes = [
-  { path: '', component: UserListComponent },
   { path: 'add', component: UserAddComponent },
   { path: 'edit/:pk', component: UserEditComponent },
-  { path: 'delete/:pk', component: UserDeleteComponent }
+  { path: 'delete/:pk', component: UserDeleteComponent },
+  { path: '', component: UserListComponent, pathMatch: 'full' },
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

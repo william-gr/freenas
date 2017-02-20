@@ -6,11 +6,8 @@ import { ModuleWithProviders } from '@angular/core';
 // noinspection TypeScriptValidateTypes
 export const routes: Routes = [
   {
-    path: '',
+    path: '', pathMatch: 'full',
     component: Dashboard,
-    children: [
-      //{ path: 'treeview', component: TreeViewComponent }
-    ]
   }
 ];
 
