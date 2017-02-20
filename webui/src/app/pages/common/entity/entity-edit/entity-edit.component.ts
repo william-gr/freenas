@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, Injector, OnDestroy, OnInit } from '@angular/core';
+import { ApplicationRef, Component, Injector, OnDestroy, OnInit, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { DynamicFormControlModel, DynamicFormService } from '@ng2-dynamic-forms/
 import { RestService } from '../../../../services/rest.service';
 
 import { Subscription } from 'rxjs';
+import { EntityUtils } from '../utils';
 
 import * as _ from 'lodash';
 
@@ -17,6 +18,8 @@ export class EntityEditComponent implements OnInit, OnDestroy {
   protected route_success: string[];
   protected formGroup: FormGroup;
   protected formModel: DynamicFormControlModel[];
+
+  @ViewChildren('component') components;
 
   private busy: Subscription;
 
@@ -74,20 +77,7 @@ export class EntityEditComponent implements OnInit, OnDestroy {
     }).subscribe((res) => {
       this.router.navigate(new Array('/pages').concat(this.route_success));
     }, (res) => {
-      if(res.code == 409) {
-        this.error = '';
-        for(let i in res.error) {
-          let field = res.error[i];
-          field.forEach((item, j) => {
-            let fc = this.formService.findById(i, this.formModel);
-            if(fc) {
-              this.error += fc.label + ': ' + item + '<br />';
-            } else {
-              this.error += item + '<br />';
-            }
-          });
-        }
-      }
+      new EntityUtils().handleError(this, res);
     });
   }
 
