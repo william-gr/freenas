@@ -74,6 +74,8 @@ export class WebSocketService {
     } else if(data.msg == "connected") {
       this.connected = true;
       setTimeout(this.ping.bind(this), 20000);
+    } else if(data.msg == "pong") {
+      // pass
     } else {
       console.log("Unknown message: ", data);
     }
