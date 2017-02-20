@@ -7,6 +7,8 @@ import { WebSocketService, RestService } from '../../../services/';
 import { DiskComponent } from './disk/';
 import { VdevComponent } from './vdev/';
 
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-manager',
   templateUrl: 'manager.component.html',
@@ -33,6 +35,8 @@ export class ManagerComponent implements OnInit {
   @ViewChildren(DiskComponent) diskComponents: QueryList<DiskComponent>;
 
   private name: string;
+
+  private busy: Subscription;
 
   constructor(private rest: RestService, private ws: WebSocketService, private router: Router, private dragulaService: DragulaService) {
     dragulaService.setOptions('pool-vdev', {
@@ -97,7 +101,7 @@ export class ManagerComponent implements OnInit {
       });
       layout.push({vdevtype: vdev.type, disks: disks});
     });
-    this.rest.post('storage/volume/', {
+    this.busy = this.rest.post('storage/volume/', {
       body: JSON.stringify({
         volume_name: this.name,
 	layout: layout
