@@ -14,8 +14,6 @@ export class BaMenuService {
 
   /**
    * Updates the routes in the menu
-   *
-   * @param {Routes} routes Type compatible with app.menu.ts
    */
   public updateMenu(menu: any[]) {
     let items = this._convertArrayToItems(menu);

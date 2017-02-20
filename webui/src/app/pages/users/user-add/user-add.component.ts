@@ -43,6 +43,17 @@ export class UserAddComponent extends EntityAddComponent {
         id: 'bsdusr_group',
         label: 'Primary Group',
 	options: [],
+        relation: [
+            {
+                action: 'DISABLE',
+                when: [
+                    {
+                        id: 'bsdusr_creategroup',
+                        value: true,
+                    }
+                ]
+            },
+        ],
     }),
     new DynamicCheckboxModel({
         id: 'bsdusr_creategroup',

@@ -43,6 +43,17 @@ export class UserEditComponent extends EntityEditComponent {
         id: 'bsdusr_group',
         label: 'Primary Group',
         options: [],
+        relation: [
+            {
+                action: 'DISABLE',
+                when: [
+                    {
+                        id: 'bsdusr_creategroup',
+                        value: true,
+                    }
+                ]
+            },
+        ],
     }),
     new DynamicSelectModel({
         id: 'bsdusr_shell',
