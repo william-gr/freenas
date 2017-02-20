@@ -17,14 +17,10 @@ export class BaMenuService {
    *
    * @param {Routes} routes Type compatible with app.menu.ts
    */
-  public updateMenuByRoutes(routes: Routes) {
-    let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(routes));
-    this.menuItems.next(convertedRoutes);
-  }
-
-  public convertRoutesToMenus(routes:Routes):any[] {
-    let items = this._convertArrayToItems(routes);
-    return this._skipEmpty(items);
+  public updateMenu(menu: any[]) {
+    let items = this._convertArrayToItems(menu);
+    items = this._skipEmpty(items);
+    this.menuItems.next(items);
   }
 
   public getCurrentItem():any {
@@ -68,39 +64,23 @@ export class BaMenuService {
     return [].concat.apply([], menu);
   }
 
-  protected _convertArrayToItems(routes:any[], parent?:any):any[] {
+  protected _convertArrayToItems(array:any[], parent?:any):any[] {
     let items = [];
-    routes.forEach((route) => {
-      items.push(this._convertObjectToItem(route, parent));
+    array.forEach((item) => {
+      items.push(this._convertObjectToItem(item, parent));
     });
     return items;
   }
 
   protected _convertObjectToItem(object, parent?:any):any {
     let item:any = {};
-    if (object.data && object.data.menu) {
-      // this is a menu object
-      item = object.data.menu;
-      item.route = object;
-      delete item.route.data.menu;
-    } else {
-      item.route = object;
-      item.skip = true;
-    }
-
-    // we have to collect all paths to correctly build the url then
-    if (Array.isArray(item.route.path)) {
-      item.route.paths = item.route.path;
-    } else {
-      item.route.paths = parent && parent.route && parent.route.paths ? parent.route.paths.slice(0) : ['/'];
-      if (!!item.route.path) item.route.paths.push(item.route.path);
-    }
+    item = object;
 
     if (object.children && object.children.length > 0) {
       item.children = this._convertArrayToItems(object.children, item);
     }
 
-    let prepared = this._prepareItem(item);
+    let prepared = item;
 
     // if current item is selected or expanded - then parent is expanded too
     if ((prepared.selected || prepared.expanded) && parent) {
@@ -110,18 +90,9 @@ export class BaMenuService {
     return prepared;
   }
 
-  protected _prepareItem(object:any):any {
-    if (!object.skip) {
-      object.target = object.target || '';
-      object.pathMatch = object.pathMatch  || 'full';
-      return this._selectItem(object);
-    }
-
-    return object;
-  }
-
   protected _selectItem(object:any):any {
-    object.selected = this._router.isActive(this._router.createUrlTree(object.route.paths), object.pathMatch === 'full');
+    let url = new Array('/pages').concat(object.path);
+    object.selected = this._router.isActive(this._router.serializeUrl(this._router.createUrlTree(url)), object.pathMatch === 'full');
     return object;
   }
 }
