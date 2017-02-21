@@ -41,4 +41,18 @@ export class VolumesListComponent {
     }
   }
 
+  getActions(row) {
+    if(row.vol_fstype == 'ZFS') {
+      return [
+        {
+          label: "Add Dataset",
+          onClick: (row) => {
+            
+          }
+        }
+      ]
+    }
+    return [];
+  }
+
 }

@@ -11,8 +11,9 @@ import { RestService } from '../../../services/rest.service';
 export class InterfacesListComponent {
 
   protected resource_name: string = 'network/interface/';
-  protected route_add: string[] = ['interfaces', 'add']
-  protected route_edit: string[] = ['interfaces', 'edit']
+  protected route_add: string[] = ['interfaces', 'add'];
+  protected route_edit: string[] = ['interfaces', 'edit'];
+  protected route_delete: string[] = ['interfaces', 'delete'];
 
   constructor(_rest: RestService, _router: Router, _state: GlobalState) {
 

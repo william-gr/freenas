@@ -97,6 +97,27 @@ export class EntityListComponent implements OnInit {
     return classes.join(' ');
   }
 
+  getActions(row) {
+    if(this.conf.getActions) {
+      return this.conf.getActions(row);
+    } else {
+      return [
+        {
+          label: "Edit",
+          onClick: (row) => {
+            this.doEdit(row.id);
+          }
+        },
+        {
+          label: "Delete",
+          onClick: (row) => {
+            this.doDelete(row.id);
+          }
+        },
+      ]
+    }
+  }
+
   rowValue(row, attr) {
     if(this.conf.rowValue) {
       return this.conf.rowValue(row, attr);
@@ -110,6 +131,10 @@ export class EntityListComponent implements OnInit {
 
   doEdit(id) {
     this.router.navigate(new Array('/pages').concat(this.conf.route_edit).concat(id));
+  }
+
+  doDelete(id) {
+    this.router.navigate(new Array('/pages').concat(this.conf.route_delete).concat(id));
   }
 
 }

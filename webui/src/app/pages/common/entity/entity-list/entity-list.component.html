@@ -5,13 +5,13 @@
  <thead>
    <tr role="row">
      <th *ngFor="let i of conf.columns">{{ i.title }}</th>
-     <!--<th>Actions</th>-->
+     <th>Actions</th>
    </tr>
   </thead>
   <tbody>
    <tr *ngFor="let i of rows" (click)="doEdit(i.id)" [class]="trClass(i)">
      <td *ngFor="let c of conf.columns"><a>{{ rowValue(i, c.name) }}</a></td>
-     <!--<td><app-entity-list-actions></app-entity-list-actions></td>-->
+     <td><app-entity-list-actions [entity]="this" [row]="i"></app-entity-list-actions></td>
    </tr>
   </tbody>
 </table>

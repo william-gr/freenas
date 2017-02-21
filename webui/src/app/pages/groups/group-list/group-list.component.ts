@@ -15,8 +15,9 @@ import { EntityListComponent } from '../../common/entity/entity-list/index';
 export class GroupListComponent {
 
   protected resource_name: string = 'account/groups/';
-  protected route_add: string[] = ['groups', 'add']
-  protected route_edit: string[] = ['groups', 'edit']
+  protected route_add: string[] = ['groups', 'add'];
+  protected route_edit: string[] = ['groups', 'edit'];
+  protected route_delete: string[] = ['groups', 'delete'];
 
   public columns:Array<any> = [
     {title: 'Group', name: 'bsdgrp_group'},
