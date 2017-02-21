@@ -42,7 +42,7 @@ export const PAGES_MENU = [
   {
     path: ['services'],
     title: 'Services',
-    icon: 'ion-cube',
+    icon: 'ion-gear-b',
     selected: false,
     expanded: false,
     order: 0
