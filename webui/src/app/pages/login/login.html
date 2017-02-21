@@ -4,7 +4,7 @@
       Connecting to WebSocket...
     </div>
 
-    <form [formGroup]="form" class="form-horizontal" *ngIf="_ws.connected == true">
+    <form [formGroup]="form" class="form-horizontal" *ngIf="_ws.connected == true" [ngBusy]="busy">
     <h1>FreeNAS</h1>
       <div *ngIf="failed == true" class="form-group">
         Username or password invalid!
