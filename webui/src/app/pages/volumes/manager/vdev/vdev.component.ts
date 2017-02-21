@@ -1,6 +1,5 @@
-import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, Type } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, QueryList, ViewChild } from '@angular/core';
 
-import { DragulaService } from 'ng2-dragula';
 import { DiskComponent } from '../disk/';
 
 @Component({

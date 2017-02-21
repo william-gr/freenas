@@ -54,8 +54,22 @@ export abstract class EntityListComponent implements OnInit {
 
     this.busy = this.rest.get(this.resource_name, options).subscribe((res) => {
       this.length = res.total;
-      this.rows = res.data;
+      this.rows = this.flattenData(res.data);
+      console.log(this.rows);
     });
+  }
+
+  flattenData(data, level=0) {
+    let ndata = [];
+    data.forEach((item) => {
+      item['_level'] = level;
+      ndata.push(item);
+      if(item.children) {
+        ndata = ndata.concat(this.flattenData(item.children, level + 1));
+      }
+      delete item.children;
+    });
+    return ndata;
   }
 
   onChangeTable(config, page:any = {page: this.page, itemsPerPage: this.itemsPerPage}) {

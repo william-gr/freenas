@@ -23,7 +23,7 @@ export class VolumesListComponent extends EntityListComponent {
   }
 
   public columns:Array<any> = [
-    {title: 'Name', name: 'vol_name'},
+    {title: 'Name', name: 'name'},
     {title: 'Status', name: 'status'},
     {title: 'Available', name: 'avail'},
     {title: 'Used', name: 'used'},
