@@ -15,7 +15,7 @@ export class VolumesListComponent {
   protected resource_name: string = 'storage/volume/';
   protected route_add: string[] = ['volumes', 'manager'];
 
-  constructor(_rest: RestService, _router: Router, _state: GlobalState, _eRef: ElementRef) {
+  constructor(_rest: RestService, private _router: Router, _state: GlobalState, _eRef: ElementRef) {
 
   }
 
@@ -42,12 +42,13 @@ export class VolumesListComponent {
   }
 
   getActions(row) {
-    if(row.vol_fstype == 'ZFS') {
+    console.log(row);
+    if(row.type == "dataset") {
       return [
         {
           label: "Add Dataset",
           onClick: (row) => {
-            
+            this._router.navigate(new Array('/pages').concat(["volumes", "id", row.id, "dataset", "add", row.path]));
           }
         }
       ]

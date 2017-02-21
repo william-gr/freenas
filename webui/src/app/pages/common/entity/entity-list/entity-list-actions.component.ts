@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-entity-list-actions',
   template: `
-    <button *ngFor="let action of entity.getActions(this.row)" class="btn" (click)="action.onClick(this.row)">{{ action?.label }}</button>
+    <button *ngFor="let action of actions" class="btn" (click)="action.onClick(this.row)">{{ action?.label }}</button>
   `
 })
 export class EntityListActionsComponent implements OnInit {
@@ -17,7 +17,10 @@ export class EntityListActionsComponent implements OnInit {
   @Input('entity') entity: any;
   @Input('row') row: any;
 
+  private actions: any[];
+
   ngOnInit() {
+    this.actions = this.entity.getActions(this.row);
   }
 
 }

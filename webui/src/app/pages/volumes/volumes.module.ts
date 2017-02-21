@@ -1,6 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { NgaModule } from '../../theme/nga.module';
 import { DynamicFormsCoreModule } from '@ng2-dynamic-forms/core';
 import { DynamicFormsBootstrapUIModule } from '@ng2-dynamic-forms/ui-bootstrap';
@@ -11,6 +12,7 @@ import { routing }       from './volumes.routing';
 
 import { DragulaModule } from 'ng2-dragula';
 
+import { DatasetAddComponent } from './datasets/dataset-add/';
 import { VolumesListComponent } from './volumes-list/';
 import { ManagerComponent, DiskComponent, VdevComponent } from './manager/';
 //import { VolumesAddComponent } from './volumes-add/';
@@ -19,6 +21,7 @@ import { ManagerComponent, DiskComponent, VdevComponent } from './manager/';
 
 @NgModule({
   imports: [
+    RouterModule,
     DragulaModule,
     EntityModule,
     BusyModule,
@@ -35,6 +38,7 @@ import { ManagerComponent, DiskComponent, VdevComponent } from './manager/';
     ManagerComponent,
     DiskComponent,
     VdevComponent,
+    DatasetAddComponent,
     //VolumesAddComponent,
     //VolumesEditComponent,
     //VolumesDeleteComponent,

@@ -1,11 +1,9 @@
-import { ApplicationRef, Component, OnInit, ViewContainerRef } from '@angular/core';
-import { FormGroup, } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DynamicFormControlModel, DynamicFormService, DynamicCheckboxModel, DynamicInputModel, DynamicSelectModel, DynamicRadioGroupModel } from '@ng2-dynamic-forms/core';
 import { GlobalState } from '../../../global.state';
 import { RestService, WebSocketService } from '../../../services/';
-import { EntityAddComponent } from '../../common/entity/entity-add/index';
 
 @Component({
   selector: 'app-group-add',

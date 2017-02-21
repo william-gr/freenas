@@ -9,7 +9,7 @@
    </tr>
   </thead>
   <tbody>
-   <tr *ngFor="let i of rows" (click)="doEdit(i.id)" [class]="trClass(i)">
+   <tr *ngFor="let i of rows" [class]="trClass(i)">
      <td *ngFor="let c of conf.columns"><a>{{ rowValue(i, c.name) }}</a></td>
      <td><app-entity-list-actions [entity]="this" [row]="i"></app-entity-list-actions></td>
    </tr>
