@@ -6,6 +6,8 @@ import { RestService } from '../../../services/rest.service';
 
 import { EntityListComponent } from '../../common/entity/entity-list/index';
 
+import filesize from 'filesize.js';
+
 @Component({
   selector: 'app-volumes-list',
   templateUrl: '../../common/entity/entity-list/entity-list.component.html',
@@ -23,10 +25,23 @@ export class VolumesListComponent extends EntityListComponent {
   public columns:Array<any> = [
     {title: 'Name', name: 'vol_name'},
     {title: 'Status', name: 'status'},
+    {title: 'Available', name: 'avail'},
+    {title: 'Used', name: 'used'},
   ];
   public config:any = {
     paging: true,
     sorting: {columns: this.columns},
   };
+
+  rowValue(row, attr) {
+    switch(attr) {
+      case 'avail':
+        return filesize(row[attr]);
+      case 'used':
+        return filesize(row[attr]) + " (" + row['used_pct'] + ")";
+      default:
+        return row[attr];
+    }
+  }
 
 }

@@ -104,7 +104,7 @@ export class ManagerComponent implements OnInit {
     this.busy = this.rest.post('storage/volume/', {
       body: JSON.stringify({
         volume_name: this.name,
-	layout: layout
+        layout: layout
       })
     }).subscribe((res) => {
     this.router.navigate(['/pages', 'volumes']);
@@ -112,9 +112,9 @@ export class ManagerComponent implements OnInit {
       if(res.code == 409) {
         this.error = '';
         for(let i in res.error) {
-	  res.error[i].forEach((error) => {
-	    this.error += error + '<br />';
-	  });
+          res.error[i].forEach((error) => {
+            this.error += error + '<br />';
+          });
         }
       }
     });
