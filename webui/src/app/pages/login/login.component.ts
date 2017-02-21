@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { WebSocketService } from '../../services/index';
 
-
 import 'style-loader!./login.scss';
 
 @Component({
@@ -32,7 +31,9 @@ export class Login {
 
   ngOnInit() {
     if(this._ws.username && this._ws.password && this._ws.redirectUrl) {
-      this._ws.login(this._ws.username, this._ws.password, this.loginCallback.bind(this));
+      this._ws.login(this._ws.username, this._ws.password).subscribe((result) => {
+        this.loginCallback(result);
+      });
     }
   }
 
@@ -40,7 +41,9 @@ export class Login {
     this.submitted = true;
     this.failed = false;
     if (this.form.valid) {
-      this._ws.login(this.username.value, this.password.value, this.loginCallback.bind(this));
+      this._ws.login(this.username.value, this.password.value).subscribe((result) => {
+        this.loginCallback(result);
+      });
     }
   }
 

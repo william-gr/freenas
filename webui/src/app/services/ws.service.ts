@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UUID } from 'angular2-uuid';
 
-import { Subject } from 'rxjs/Rx';
+import { Observable, Subject, Subscription } from 'rxjs/Rx';
 
 import { Router } from '@angular/router';
 import { LocalStorage } from 'ng2-webstorage';
@@ -70,7 +70,13 @@ export class WebSocketService {
       if(data.error) {
         console.log("Error: ", data.error);
       }
-      call.callback(data.result);
+      if(call.callback) {
+        call.callback(data.result);
+      }
+      if(call.observer) {
+        call.observer.next(data.result);
+        call.observer.complete();
+      }
     } else if(data.msg == "connected") {
       this.connected = true;
       setTimeout(this.ping.bind(this), 20000);
@@ -82,7 +88,7 @@ export class WebSocketService {
 
   }
 
-  call(method, params, callback) {
+  call(method, params, callback?: any): Observable<any> {
 
     let uuid = UUID.UUID();
     let payload = {
@@ -92,33 +98,35 @@ export class WebSocketService {
       "params": params
     };
 
-    this.pendingCalls.set(uuid, {
+    let source = Observable.create((observer) => {
+      this.pendingCalls.set(uuid, {
         "method": method,
         "args": params,
-        "callback": callback
+        "callback": callback,
+        "observer": observer,
+      });
     });
 
     this.socket.send(JSON.stringify(payload));
 
+    return source;
+
   }
 
-  login(username, password, callback) {
-    let me = this;
+  login(username, password, callback?: any): Observable<any> {
     this.username = username;
     this.password = password;
-    function doCallback(result) {
-        me.loginCallback(result);
-        if(callback) { callback(result) };
-    }
-    this.call('auth.login', [username, password], doCallback);
-  }
-
-  loginCallback(result) {
-    if(result === true) {
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-    }
+    return Observable.create((observer) => {
+      this.call('auth.login', [username, password]).subscribe((result) => {
+        if(result === true) {
+          this.loggedIn = true;
+        } else {
+          this.loggedIn = false;
+        }
+        observer.next(result);
+        observer.complete();
+      });
+    });
   }
 
   logout() {
