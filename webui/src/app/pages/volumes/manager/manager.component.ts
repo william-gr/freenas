@@ -97,7 +97,7 @@ export class ManagerComponent implements OnInit {
     this.vdevComponents.forEach((vdev) => {
       let disks = [];
       vdev.getDisks().forEach((disk) => {
-	disks.push('/dev/' + disk.data.devname);
+        disks.push(disk.data.devname);
       });
       layout.push({vdevtype: vdev.type, disks: disks});
     });
