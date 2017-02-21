@@ -2,10 +2,13 @@ import { Component, Input } from '@angular/core';
 
 import { RestService, WebSocketService } from '../../../services/';
 
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'service',
   template: `
-  <ba-card [ngBusy]="busy">
+  <ba-card>
+    <div [ngBusy]="busy">
     {{ status.service }}
 
     <button class="btn btn-primary" (click)="toggle()">
@@ -14,12 +17,15 @@ import { RestService, WebSocketService } from '../../../services/';
     </button>
 
     <input type="checkbox" [checked]="status.enable" (click)="enableToggle()" /> Start on Boot
+    </div>
   </ba-card>
   `,
 })
 export class Service {
 
   @Input('status') status: any;
+
+  private busy: Subscription;
 
   constructor(private rest: RestService, private ws: WebSocketService) {
   }
@@ -33,7 +39,7 @@ export class Service {
       rpc = 'service.stop';
     }
 
-    this.ws.call(rpc, [this.status.service], (res) => {
+    this.busy = this.ws.call(rpc, [this.status.service]).subscribe((res) => {
       if(res) {
         this.status.state = 'RUNNING';
       } else {
@@ -45,7 +51,7 @@ export class Service {
 
   enableToggle() {
 
-    this.ws.call('service.update', [this.status.id, {enable: !this.status.enable}], (res) => {
+    this.busy = this.ws.call('service.update', [this.status.id, {enable: !this.status.enable}]).subscribe((res) => {
       if(res) {
         this.status.enable = !this.status.enable;
       }

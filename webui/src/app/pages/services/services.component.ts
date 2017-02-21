@@ -19,7 +19,7 @@ export class Services implements OnInit {
 
   ngOnInit() {
 
-    this.ws.call('service.query', [], (res) => {
+    this.busy = this.ws.call('service.query', []).subscribe((res) => {
       this.services = res;
     });
 

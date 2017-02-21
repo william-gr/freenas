@@ -6,12 +6,6 @@ import { RestService } from '../../../../services/rest.service';
 
 import { Subscription } from 'rxjs';
 
-@Component({
-  moduleId: module.id,
-  selector: 'app-entity-list',
-  templateUrl: 'entity-list.component.html',
-  styleUrls: ['entity-list.component.css']
-})
 export abstract class EntityListComponent implements OnInit {
 
   protected resource_name: string;

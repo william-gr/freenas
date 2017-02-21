@@ -105,9 +105,9 @@ export class WebSocketService {
         "callback": callback,
         "observer": observer,
       });
-    });
 
-    this.socket.send(JSON.stringify(payload));
+      this.socket.send(JSON.stringify(payload));
+    });
 
     return source;
 
