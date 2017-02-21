@@ -53,14 +53,14 @@ export class ManagerComponent implements OnInit {
       this.diskComponents.forEach((item) => {
         if(diskDom == item.elementRef.nativeElement) {
           disk = item;
-	}
+        }
       });
       this.vdevComponents.forEach((item) => {
         if(destDom == item.dnd.nativeElement) {
           destVdev = item;
-	} else if(srcDom == item.dnd.nativeElement) {
-          srcVdev = item;
-	}
+        } else if(srcDom == item.dnd.nativeElement) {
+                srcVdev = item;
+        }
       });
       if(srcVdev) {
         srcVdev.removeDisk(disk);
@@ -78,7 +78,7 @@ export class ManagerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ws.call("notifier.get_disks", [], (res) => {
+    this.ws.call("notifier.get_disks", [true]).subscribe((res) => {
       this.disks = []
       for(let i in res) {
         this.disks.push(res[i]);

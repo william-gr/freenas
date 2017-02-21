@@ -73,7 +73,7 @@ export class InterfacesAddComponent extends EntityAddComponent {
   }
 
   afterInit() {
-    this.ws.call('notifier.choices', ['NICChoices'], (res) => {
+    this.ws.call('notifier.choices', ['NICChoices']).subscribe((res) => {
       this.int_interface = <DynamicSelectModel<string>> this.formService.findById("int_interface", this.formModel);
       res.forEach((item) => {
           this.int_interface.add({label: item[1], value: item[0]});

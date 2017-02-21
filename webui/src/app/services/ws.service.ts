@@ -70,9 +70,6 @@ export class WebSocketService {
       if(data.error) {
         console.log("Error: ", data.error);
       }
-      if(call.callback) {
-        call.callback(data.result);
-      }
       if(call.observer) {
         call.observer.next(data.result);
         call.observer.complete();
@@ -88,7 +85,7 @@ export class WebSocketService {
 
   }
 
-  call(method, params, callback?: any): Observable<any> {
+  call(method, params): Observable<any> {
 
     let uuid = UUID.UUID();
     let payload = {
@@ -102,7 +99,6 @@ export class WebSocketService {
       this.pendingCalls.set(uuid, {
         "method": method,
         "args": params,
-        "callback": callback,
         "observer": observer,
       });
 
@@ -113,7 +109,7 @@ export class WebSocketService {
 
   }
 
-  login(username, password, callback?: any): Observable<any> {
+  login(username, password): Observable<any> {
     this.username = username;
     this.password = password;
     return Observable.create((observer) => {
