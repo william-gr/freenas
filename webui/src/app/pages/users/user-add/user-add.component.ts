@@ -5,22 +5,20 @@ import { Router } from '@angular/router';
 import { DynamicFormControlModel, DynamicFormService, DynamicCheckboxModel, DynamicInputModel, DynamicSelectModel, DynamicRadioGroupModel } from '@ng2-dynamic-forms/core';
 import { GlobalState } from '../../../global.state';
 import { RestService, WebSocketService } from '../../../services/';
-import { EntityAddComponent } from '../../common/entity/entity-add/index';
 
 @Component({
   selector: 'app-user-add',
-  templateUrl: '../../common/entity/entity-add/entity-add.component.html',
-  styleUrls: ['../../common/entity/entity-add/entity-add.component.css']
+  template: `<entity-add [conf]="this"></entity-add>`
 })
-export class UserAddComponent extends EntityAddComponent {
+export class UserAddComponent {
 
   protected route_success: string[] = ['users'];
   protected resource_name: string = 'account/users/';
   protected formModel: DynamicFormControlModel[] = [
     new DynamicInputModel({
-        id: 'bsdusr_uid',
-        label: 'UID',
-	validators: {required: null},
+      id: 'bsdusr_uid',
+      label: 'UID',
+      validators: {required: null},
     }),
     new DynamicInputModel({
         id: 'bsdusr_username',
@@ -40,20 +38,20 @@ export class UserAddComponent extends EntityAddComponent {
         inputType: 'password',
     }),
     new DynamicSelectModel({
-        id: 'bsdusr_group',
-        label: 'Primary Group',
-	options: [],
-        relation: [
+      id: 'bsdusr_group',
+      label: 'Primary Group',
+      options: [],
+      relation: [
+        {
+          action: 'DISABLE',
+          when: [
             {
-                action: 'DISABLE',
-                when: [
-                    {
-                        id: 'bsdusr_creategroup',
-                        value: true,
-                    }
-                ]
-            },
-        ],
+              id: 'bsdusr_creategroup',
+              value: true,
+            }
+          ]
+        },
+      ],
     }),
     new DynamicCheckboxModel({
         id: 'bsdusr_creategroup',
@@ -69,10 +67,10 @@ export class UserAddComponent extends EntityAddComponent {
   private bsdusr_group: DynamicSelectModel<string>;
 
   constructor(protected router: Router, protected rest: RestService, protected ws: WebSocketService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef, protected _state: GlobalState) {
-    super(router, rest, ws, formService, _injector, _appRef, _state);
+
   }
 
-  afterInit() {
+  afterInit(entityAdd: any) {
     this.rest.get('account/groups/', {}).subscribe((res) => {
       this.bsdusr_group = <DynamicSelectModel<string>> this.formService.findById("bsdusr_group", this.formModel);
       res.data.forEach((item) => {
@@ -86,14 +84,14 @@ export class UserAddComponent extends EntityAddComponent {
         if(item.bsdusr_uid > uid) uid = item.bsdusr_uid;
       });
       uid += 1;
-      this.formGroup.controls['bsdusr_uid'].setValue(uid);
+      entityAdd.formGroup.controls['bsdusr_uid'].setValue(uid);
     });
     this.shells = [
       {label: '/bin/sh', value: '/bin/sh'},
     ]
     this.bsdusr_shell = <DynamicSelectModel<string>> this.formService.findById("bsdusr_shell", this.formModel);
     this.bsdusr_shell.options = this.shells;
-    this.formGroup.controls['bsdusr_shell'].setValue(this.shells[0]['value']);
+    entityAdd.formGroup.controls['bsdusr_shell'].setValue(this.shells[0]['value']);
   }
 
   clean_uid(value) {

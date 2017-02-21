@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GlobalState } from '../../../../global.state';
@@ -6,11 +6,14 @@ import { RestService } from '../../../../services/rest.service';
 
 import { Subscription } from 'rxjs';
 
-export abstract class EntityListComponent implements OnInit {
+@Component({
+  selector: 'entity-list',
+  templateUrl: './entity-list.component.html',
+  styleUrls: ['./entity-list.component.css']
+})
+export class EntityListComponent implements OnInit {
 
-  protected resource_name: string;
-  protected route_add: string[];
-  protected route_edit: string[];
+  @Input('conf') conf: any;
 
   private busy: Subscription;
 
@@ -26,7 +29,7 @@ export abstract class EntityListComponent implements OnInit {
     sorting: {columns: this.columns},
   };
 
-  constructor(protected rest: RestService, protected router: Router, protected _state: GlobalState) { }
+  constructor(protected rest: RestService, protected router: Router, protected _state: GlobalState, protected _eRef: ElementRef) { }
 
   ngOnInit() {
     this.getData();
@@ -52,20 +55,22 @@ export abstract class EntityListComponent implements OnInit {
       options['sort'] = sort.join(',');
     }
 
-    this.busy = this.rest.get(this.resource_name, options).subscribe((res) => {
+    this.busy = this.rest.get(this.conf.resource_name, options).subscribe((res) => {
       this.length = res.total;
       this.rows = this.flattenData(res.data);
-      console.log(this.rows);
     });
   }
 
-  flattenData(data, level=0) {
+  flattenData(data, level=0, parent?: any) {
     let ndata = [];
     data.forEach((item) => {
-      item['_level'] = level;
+      item._level = level;
+      if(parent) {
+        item._parent = parent.id;
+      }
       ndata.push(item);
       if(item.children) {
-        ndata = ndata.concat(this.flattenData(item.children, level + 1));
+        ndata = ndata.concat(this.flattenData(item.children, level + 1, item));
       }
       delete item.children;
     });
@@ -83,16 +88,28 @@ export abstract class EntityListComponent implements OnInit {
     this.getData();
   }
 
+  trClass(row) {
+    let classes = [];
+    classes.push('treegrid-' + row.id);
+    if(row._parent) {
+      classes.push('treegrid-parent-' + row._parent);
+    }
+    return classes.join(' ');
+  }
+
   rowValue(row, attr) {
+    if(this.conf.rowValue) {
+      return this.conf.rowValue(row, attr);
+    }
     return row[attr];
   }
 
   doAdd() {
-    this.router.navigate(new Array('/pages').concat(this.route_add));
+    this.router.navigate(new Array('/pages').concat(this.conf.route_add));
   }
 
   doEdit(id) {
-    this.router.navigate(new Array('/pages').concat(this.route_edit).concat(id));
+    this.router.navigate(new Array('/pages').concat(this.conf.route_edit).concat(id));
   }
 
 }

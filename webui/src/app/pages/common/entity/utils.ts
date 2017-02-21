@@ -9,7 +9,7 @@ export class EntityUtils {
       entity.error = '';
       for(let i in res.error) {
         let field = res.error[i];
-        let fc = entity.formService.findById(i, entity.formModel);
+        let fc = entity.formService.findById(i, entity.conf.formModel);
         if(fc) {
           entity.components.forEach((item) => {
           if(item.model == fc) {

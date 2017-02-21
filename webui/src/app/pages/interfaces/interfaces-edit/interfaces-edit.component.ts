@@ -3,14 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { DynamicFormControlModel, DynamicFormService, DynamicCheckboxModel, DynamicInputModel, DynamicSelectModel, DynamicRadioGroupModel } from '@ng2-dynamic-forms/core';
 import { RestService } from '../../../services/rest.service';
-import { EntityEditComponent } from '../../common/entity/entity-edit/index';
 
 @Component({
   selector: 'app-interfaces-edit',
-  templateUrl: '../../common/entity/entity-edit/entity-edit.component.html',
-  styleUrls: ['../../common/entity/entity-edit/entity-edit.component.css']
+  template: `<entity-edit [conf]="this"></entity-edit>`
 })
-export class InterfacesEditComponent extends EntityEditComponent {
+export class InterfacesEditComponent {
 
   protected resource_name: string = 'network/interface/';
   protected route_delete: string[] = ['interfaces', 'delete'];
@@ -66,10 +64,10 @@ export class InterfacesEditComponent extends EntityEditComponent {
   ];
 
   constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef) {
-    super(router, route, rest, formService, _injector, _appRef);
+
   }
 
-  afterInit() {
+  afterInit(entityEdit: any) {
   }
 
 }

@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, Injector, OnDestroy, OnInit, ViewChildren } from '@angular/core';
+import { ApplicationRef, Component, Injector, Input, OnDestroy, OnInit, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,14 +10,17 @@ import { EntityUtils } from '../utils';
 
 import * as _ from 'lodash';
 
+@Component({
+  selector: 'entity-edit',
+  templateUrl: './entity-edit.component.html',
+  styleUrls: ['./entity-edit.component.css']
+})
 export class EntityEditComponent implements OnInit, OnDestroy {
 
+  @Input('conf') conf: any;
+
   protected pk: any;
-  protected resource_name: string;
-  protected route_delete: string[];
-  protected route_success: string[];
   protected formGroup: FormGroup;
-  protected formModel: DynamicFormControlModel[];
 
   @ViewChildren('component') components;
 
@@ -32,30 +35,28 @@ export class EntityEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.formGroup = this.formService.createFormGroup(this.formModel);
+    this.formGroup = this.formService.createFormGroup(this.conf.formModel);
     this.sub = this.route.params.subscribe(params => {
       this.pk = params['pk'];
-      this.rest.get(this.resource_name + '/' + params['pk'] + '/', {}).subscribe((res) => {
+      this.rest.get(this.conf.resource_name + '/' + this.pk + '/', {}).subscribe((res) => {
         this.data = res.data;
-	for(let i in this.data) {
-	  let fg = this.formGroup.controls[i];
-	  if(fg) {
-	    fg.setValue(this.data[i]);
-	  }
-	}
+        for(let i in this.data) {
+          let fg = this.formGroup.controls[i];
+          if(fg) {
+            fg.setValue(this.data[i]);
+          }
+        }
       })
     });
-    this.afterInit();
+    this.conf.afterInit(this);
   }
-
-  afterInit() { }
 
   clean(value) {
     return value;
   }
 
   gotoDelete() {
-    this.router.navigate(new Array('/pages').concat(this.route_delete).concat(this.pk));
+    this.router.navigate(new Array('/pages').concat(this.conf.route_delete).concat(this.pk));
   }
 
   onSubmit() {
@@ -72,10 +73,10 @@ export class EntityEditComponent implements OnInit, OnDestroy {
     }
     value = this.clean(value);
 
-    this.busy = this.rest.put(this.resource_name + '/' + this.pk + '/', {
+    this.busy = this.rest.put(this.conf.resource_name + '/' + this.pk + '/', {
       body: JSON.stringify(value),
     }).subscribe((res) => {
-      this.router.navigate(new Array('/pages').concat(this.route_success));
+      this.router.navigate(new Array('/pages').concat(this.conf.route_success));
     }, (res) => {
       new EntityUtils().handleError(this, res);
     });

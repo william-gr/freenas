@@ -3,14 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { DynamicFormControlModel, DynamicFormService, DynamicCheckboxModel, DynamicInputModel, DynamicSelectModel, DynamicRadioGroupModel } from '@ng2-dynamic-forms/core';
 import { RestService } from '../../../services/rest.service';
-import { EntityEditComponent } from '../../common/entity/entity-edit/index';
 
 @Component({
   selector: 'app-user-edit',
-  templateUrl: '../../common/entity/entity-edit/entity-edit.component.html',
-  styleUrls: ['../../common/entity/entity-edit/entity-edit.component.css']
+  template: `<entity-edit [conf]="this"></entity-edit>`
 })
-export class UserEditComponent extends EntityEditComponent {
+export class UserEditComponent {
 
   protected resource_name: string = 'account/users';
   protected route_delete: string[] = ['users', 'delete'];
@@ -66,10 +64,10 @@ export class UserEditComponent extends EntityEditComponent {
   public shells: any[];
 
   constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef) {
-    super(router, route, rest, formService, _injector, _appRef);
+
   }
 
-  afterInit() {
+  afterInit(entityEdit) {
     this.rest.get('account/groups/', {}).subscribe((res) => {
       this.bsdusr_group = <DynamicSelectModel<string>> this.formService.findById("bsdusr_group", this.formModel);
       res.data.forEach((item) => {
@@ -81,10 +79,10 @@ export class UserEditComponent extends EntityEditComponent {
     this.shells = [
       {label: '/bin/sh', value: '/bin/sh'},
     ]
-    this.data['bsdusr_shell'] = this.shells[0];
+    entityEdit.data['bsdusr_shell'] = this.shells[0];
     this.bsdusr_shell = <DynamicSelectModel<string>> this.formService.findById("bsdusr_shell", this.formModel);
     this.bsdusr_shell.options = this.shells;
-    this.formGroup.controls['bsdusr_shell'].setValue(this.shells[0]['value']);
+    entityEdit.formGroup.controls['bsdusr_shell'].setValue(this.shells[0]['value']);
 
   }
 

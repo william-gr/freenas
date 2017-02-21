@@ -6,6 +6,7 @@ import { DynamicFormsCoreModule } from '@ng2-dynamic-forms/core';
 import { DynamicFormsBootstrapUIModule } from '@ng2-dynamic-forms/ui-bootstrap';
 import { BusyModule } from 'angular2-busy';
 
+import { EntityModule } from '../common/entity/entity.module';
 import { routing }       from './interfaces.routing';
 
 import { InterfacesListComponent } from './interfaces-list/';
@@ -15,6 +16,7 @@ import { InterfacesDeleteComponent } from './interfaces-delete/';
 
 @NgModule({
   imports: [
+    EntityModule,
     BusyModule,
     DynamicFormsCoreModule.forRoot(),
     DynamicFormsBootstrapUIModule,

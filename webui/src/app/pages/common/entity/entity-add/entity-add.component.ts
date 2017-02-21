@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, Injector, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { ApplicationRef, Component, Injector, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DynamicFormControlModel, DynamicFormService } from '@ng2-dynamic-forms/core';
@@ -9,12 +9,16 @@ import { RestService, WebSocketService } from '../../../../services/';
 import { Subscription } from 'rxjs';
 import { EntityUtils } from '../utils';
 
-export abstract class EntityAddComponent implements OnInit {
+@Component({
+  selector: 'entity-add',
+  templateUrl: './entity-add.component.html',
+  styleUrls: ['./entity-add.component.css']
+})
+export class EntityAddComponent implements OnInit {
 
-  protected route_success: string[] = [];
-  protected resource_name: string;
-  protected formGroup: FormGroup;
-  protected formModel: DynamicFormControlModel[];
+  @Input('conf') conf: any;
+
+  public formGroup: FormGroup;
   public error: string;
   public data: Object = {};
 
@@ -27,11 +31,9 @@ export abstract class EntityAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formGroup = this.formService.createFormGroup(this.formModel);
-    this.afterInit();
+    this.formGroup = this.formService.createFormGroup(this.conf.formModel);
+    this.conf.afterInit(this);
   }
-
-  afterInit() {}
 
   onSubmit() {
     this.error = null;
@@ -43,10 +45,10 @@ export abstract class EntityAddComponent implements OnInit {
       }
     }
 
-    this.busy = this.rest.post(this.resource_name, {
+    this.busy = this.rest.post(this.conf.resource_name, {
       body: JSON.stringify(this.formGroup.value),
     }).subscribe((res) => {
-      this.router.navigate(new Array('/pages').concat(this.route_success));
+      this.router.navigate(new Array('/pages').concat(this.conf.route_success));
     }, (res) => {
       new EntityUtils().handleError(this, res);
     });

@@ -1,16 +1,14 @@
 import { ApplicationRef, Component, Injector, OnInit, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { DynamicFormControlModel, DynamicFormService, DynamicCheckboxModel, DynamicInputModel, DynamicSelectModel, DynamicRadioGroupModel } from '@ng2-dynamic-forms/core';
 import { RestService } from '../../../services/rest.service';
-import { EntityEditComponent } from '../../common/entity/entity-edit/index';
 
 @Component({
   selector: 'app-group-edit',
-  templateUrl: '../../common/entity/entity-edit/entity-edit.component.html',
-  styleUrls: ['../../common/entity/entity-edit/entity-edit.component.css']
+  template: `<entity-edit [conf]="this"></entity-edit>`
 })
-export class GroupEditComponent extends EntityEditComponent {
+export class GroupEditComponent {
 
   protected resource_name: string = 'account/groups/';
   protected route_delete: string[] = ['groups', 'delete'];
@@ -29,11 +27,11 @@ export class GroupEditComponent extends EntityEditComponent {
 
   public users: any[];
 
-  constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef) {
-    super(router, route, rest, formService, _injector, _appRef);
+  constructor(protected router: Router, protected rest: RestService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef) {
+
   }
 
-  afterInit() {
+  afterInit(entityEdit: any) {
     this.rest.get('account/users/', {limit: 0}).subscribe((res) => {
       this.users = res.data;
     });

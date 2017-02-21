@@ -1,16 +1,20 @@
-import { ApplicationRef, Component, Injector, OnDestroy, OnInit } from '@angular/core';
+import { ApplicationRef, Component, Input, Injector, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RestService } from '../../../../services/rest.service';
 
 import { Subscription } from 'rxjs';
 
-export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
+@Component({
+  selector: 'entity-delete',
+  templateUrl: './entity-delete.component.html',
+  styleUrls: ['./entity-delete.component.css']
+})
+export class EntityDeleteComponent implements OnInit, OnDestroy {
+
+  @Input('conf') conf: any;
 
   protected pk: any;
-  protected resource_name: string;
-  protected route_delete: string[];
-  protected route_success: string[];
   private sub: any;
   public error: string;
   public data: Object = {};
@@ -23,7 +27,7 @@ export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.pk = params['pk'];
-      this.rest.get(this.resource_name + '/' + this.pk + '/', {}).subscribe((res) => {
+      this.rest.get(this.conf.resource_name + '/' + this.pk + '/', {}).subscribe((res) => {
         this.data = res.data;
       }, () => {
         alert("Ooops! Failed to get!");
@@ -36,8 +40,8 @@ export abstract class EntityDeleteComponent implements OnInit, OnDestroy {
   }
 
   doSubmit() {
-    this.busy = this.rest.delete(this.resource_name + '/' + this.pk, {}).subscribe((res) => {
-      this.router.navigate(new Array('/pages').concat(this.route_success));
+    this.busy = this.rest.delete(this.conf.resource_name + '/' + this.pk, {}).subscribe((res) => {
+      this.router.navigate(new Array('/pages').concat(this.conf.route_success));
     }, (res) => {
       if(res.error.exception_class == 'ValidationErrors') {
         res.error.errors.forEach((item, i) => {

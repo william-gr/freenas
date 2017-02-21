@@ -1,24 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { RestService } from '../../../services/rest.service';
-
-import { GlobalState } from '../../../global.state';
-import { EntityListComponent } from '../../common/entity/entity-list/index';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-user-list',
-  templateUrl: '../../common/entity/entity-list/entity-list.component.html',
-  styleUrls: ['../../common/entity/entity-list/entity-list.component.css']
+  template: `<entity-list [conf]="this"></entity-list>`
 })
-export class UserListComponent extends EntityListComponent {
+export class UserListComponent {
 
   protected resource_name: string = 'account/users';
   protected route_add: string[] = ['users', 'add']
   protected route_edit: string[] = ['users', 'edit']
-
-  constructor(_rest: RestService, _router: Router, _state: GlobalState) {
-    super(_rest, _router, _state);
-  }
 
   public columns:Array<any> = [
     {title: 'Username', name: 'bsdusr_username'},

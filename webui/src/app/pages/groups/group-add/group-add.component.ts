@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, Injector, OnInit, ViewContainerRef } from '@angular/core';
+import { ApplicationRef, Component, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup, } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,10 +9,9 @@ import { EntityAddComponent } from '../../common/entity/entity-add/index';
 
 @Component({
   selector: 'app-group-add',
-  templateUrl: '../../common/entity/entity-add/entity-add.component.html',
-  styleUrls: ['../../common/entity/entity-add/entity-add.component.css']
+  template: `<entity-add [conf]="this"></entity-add>`
 })
-export class GroupAddComponent extends EntityAddComponent {
+export class GroupAddComponent {
 
   protected route_success: string[] = ['groups'];
   protected resource_name: string = 'account/groups/';
@@ -29,11 +28,11 @@ export class GroupAddComponent extends EntityAddComponent {
   ];
   public users: any[];
 
-  constructor(protected router: Router, protected rest: RestService, protected ws: WebSocketService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef, protected _state: GlobalState) {
-    super(router, rest, ws, formService, _injector, _appRef, _state);
+  constructor(protected router: Router, protected rest: RestService, protected ws: WebSocketService, protected formService: DynamicFormService) {
+
   }
 
-  afterInit() {
+  afterInit(entityAdd: any) {
     this.rest.get('account/users/', {limit: 0}).subscribe((res) => {
       this.users = res.data;
     });
@@ -44,7 +43,7 @@ export class GroupAddComponent extends EntityAddComponent {
         if(item.bsdgrp_gid > gid) gid = item.bsdgrp_gid;
       });
       gid += 1;
-      this.formGroup.controls['bsdgrp_gid'].setValue(gid);
+      entityAdd.formGroup.controls['bsdgrp_gid'].setValue(gid);
     });
 
   }

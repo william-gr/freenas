@@ -1,25 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GlobalState } from '../../../global.state';
 import { RestService } from '../../../services/rest.service';
 
-import { EntityListComponent } from '../../common/entity/entity-list/index';
-
 import filesize from 'filesize.js';
 
 @Component({
   selector: 'app-volumes-list',
-  templateUrl: '../../common/entity/entity-list/entity-list.component.html',
-  styleUrls: ['../../common/entity/entity-list/entity-list.component.css']
+  template: `<entity-list [conf]="this"></entity-list>`
 })
-export class VolumesListComponent extends EntityListComponent {
+export class VolumesListComponent {
 
   protected resource_name: string = 'storage/volume/';
   protected route_add: string[] = ['volumes', 'manager'];
 
-  constructor(_rest: RestService, _router: Router, _state: GlobalState) {
-    super(_rest, _router, _state);
+  constructor(_rest: RestService, _router: Router, _state: GlobalState, _eRef: ElementRef) {
+
   }
 
   public columns:Array<any> = [

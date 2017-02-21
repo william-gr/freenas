@@ -38,7 +38,7 @@ export type StoreType = {
 @NgModule({
   bootstrap: [App],
   declarations: [
-    App
+    App,
   ],
   imports: [ // import Angular's modules
     BrowserModule,

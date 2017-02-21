@@ -6,6 +6,7 @@ import { DynamicFormsCoreModule } from '@ng2-dynamic-forms/core';
 import { DynamicFormsBootstrapUIModule } from '@ng2-dynamic-forms/ui-bootstrap';
 import { BusyModule } from 'angular2-busy';
 
+import { EntityModule } from '../common/entity/entity.module';
 import { routing }       from './groups.routing';
 
 import { GroupListComponent } from './group-list/';
@@ -16,6 +17,7 @@ import { GroupDeleteComponent } from './group-delete/';
 @NgModule({
   imports: [
     BusyModule,
+    EntityModule,
     DynamicFormsCoreModule.forRoot(),
     DynamicFormsBootstrapUIModule,
     CommonModule,
