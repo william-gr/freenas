@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { DynamicFormControlModel, DynamicFormService } from '@ng2-dynamic-forms/core';
-import { RestService } from '../../../../services/rest.service';
+import { RestService, WebSocketService } from '../../../../services/';
 
 import { Subscription } from 'rxjs';
 import { EntityUtils } from '../utils';
@@ -30,7 +30,7 @@ export class EntityEditComponent implements OnInit, OnDestroy {
   public error: string;
   public data: Object = {};
 
-  constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef) {
+  constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService, protected ws: WebSocketService, protected formService: DynamicFormService, protected _injector: Injector, protected _appRef: ApplicationRef) {
 
   }
 

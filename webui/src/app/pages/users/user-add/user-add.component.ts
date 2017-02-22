@@ -86,12 +86,14 @@ export class UserAddComponent {
       uid += 1;
       entityAdd.formGroup.controls['bsdusr_uid'].setValue(uid);
     });
-    this.shells = [
-      {label: '/bin/sh', value: '/bin/sh'},
-    ]
-    this.bsdusr_shell = <DynamicSelectModel<string>> this.formService.findById("bsdusr_shell", this.formModel);
-    this.bsdusr_shell.options = this.shells;
-    entityAdd.formGroup.controls['bsdusr_shell'].setValue(this.shells[0]['value']);
+    entityAdd.ws.call('notifier.choices', ['SHELL_CHOICES']).subscribe((res) => {
+      this.bsdusr_shell = <DynamicSelectModel<string>> this.formService.findById("bsdusr_shell", this.formModel);
+      this.shells = res;
+      res.forEach((item) => {
+        this.bsdusr_shell.add({ label: item[1], value: item[0] });
+      });
+      entityAdd.formGroup.controls['bsdusr_shell'].setValue(this.shells[1][0]);
+    });
   }
 
   clean_uid(value) {

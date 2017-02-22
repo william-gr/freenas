@@ -16,50 +16,50 @@ export class InterfacesAddComponent {
 
   protected formModel: DynamicFormControlModel[] = [
     new DynamicInputModel({
-        id: 'int_name',
-        label: 'Name',
+      id: 'int_name',
+      label: 'Name',
     }),
     new DynamicSelectModel({
-        id: 'int_interface',
-        label: 'Interface',
+      id: 'int_interface',
+      label: 'Interface',
     }),
     new DynamicInputModel({
-        id: 'int_ipv4address',
-        label: 'IPv4 Address',
-        relation: [
+      id: 'int_ipv4address',
+      label: 'IPv4 Address',
+      relation: [
+        {
+          action: "DISABLE",
+          when: [
             {
-                action: "DISABLE",
-                when: [
-                    {
-                        id: "int_dhcp",
-                        value: true,
-                    }
-                ]
-            },
-        ],
+              id: "int_dhcp",
+              value: true,
+            }
+          ]
+        },
+      ],
     }),
     new DynamicInputModel({
-        id: 'int_v4netmaskbit',
-        label: 'IPv4 Netmask',
-        relation: [
+      id: 'int_v4netmaskbit',
+      label: 'IPv4 Netmask',
+      relation: [
+        {
+          action: "DISABLE",
+          when: [
             {
-                action: "DISABLE",
-                when: [
-                    {
-                        id: "int_dhcp",
-                        value: true,
-                    }
-                ]
-            },
-        ],
+              id: "int_dhcp",
+              value: true,
+            }
+          ]
+        },
+      ],
     }),
     new DynamicCheckboxModel({
-        id: 'int_dhcp',
-        label: 'DHCP',
+      id: 'int_dhcp',
+      label: 'DHCP',
     }),
     new DynamicInputModel({
-        id: 'int_options',
-        label: 'Options',
+      id: 'int_options',
+      label: 'Options',
     }),
   ];
 
@@ -71,9 +71,9 @@ export class InterfacesAddComponent {
 
   afterInit(entityAdd: any) {
     entityAdd.ws.call('notifier.choices', ['NICChoices']).subscribe((res) => {
-      this.int_interface = <DynamicSelectModel<string>> this.formService.findById("int_interface", this.formModel);
+      this.int_interface = <DynamicSelectModel<string>>this.formService.findById("int_interface", this.formModel);
       res.forEach((item) => {
-          this.int_interface.add({label: item[1], value: item[0]});
+        this.int_interface.add({ label: item[1], value: item[0] });
       });
     });
   }
