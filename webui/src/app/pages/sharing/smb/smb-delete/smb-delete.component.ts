@@ -9,7 +9,7 @@ import { RestService } from '../../../../services/';
 })
 export class SMBDeleteComponent {
 
-  protected resource_name: string = 'sharing/smb/';
+  protected resource_name: string = 'sharing/cifs/';
   protected route_success: string[] = ['sharing', 'smb'];
 
   constructor(protected router: Router, protected route: ActivatedRoute, protected rest: RestService) {

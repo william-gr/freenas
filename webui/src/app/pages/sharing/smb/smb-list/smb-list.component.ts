@@ -10,7 +10,7 @@ import { RestService } from '../../../../services/rest.service';
 })
 export class SMBListComponent {
 
-  protected resource_name: string = 'sharing/smb/';
+  protected resource_name: string = 'sharing/cifs/';
   protected route_add: string[] = ['sharing', 'smb', 'add'];
   protected route_edit: string[] = ['sharing', 'smb', 'edit'];
   protected route_delete: string[] = ['sharing', 'smb', 'delete'];
