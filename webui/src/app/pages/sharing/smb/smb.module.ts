@@ -7,12 +7,12 @@ import { DynamicFormsBootstrapUIModule } from '@ng2-dynamic-forms/ui-bootstrap';
 import { BusyModule } from 'angular2-busy';
 
 import { EntityModule } from '../../common/entity/entity.module';
-import { routing } from './cifs.routing';
+import { routing } from './smb.routing';
 
-import { CIFSListComponent } from './cifs-list/';
-import { CIFSAddComponent } from './cifs-add/';
-import { CIFSEditComponent } from './cifs-edit/';
-import { CIFSDeleteComponent } from './cifs-delete/';
+import { SMBListComponent } from './smb-list/';
+import { SMBAddComponent } from './smb-add/';
+import { SMBEditComponent } from './smb-edit/';
+import { SMBDeleteComponent } from './smb-delete/';
 
 @NgModule({
   imports: [
@@ -27,12 +27,12 @@ import { CIFSDeleteComponent } from './cifs-delete/';
     routing
   ],
   declarations: [
-    CIFSListComponent,
-    CIFSAddComponent,
-    CIFSEditComponent,
-    CIFSDeleteComponent,
+    SMBListComponent,
+    SMBAddComponent,
+    SMBEditComponent,
+    SMBDeleteComponent,
   ],
   providers: [
   ]
 })
-export class CIFSModule { }
+export class SMBModule { }

@@ -5,26 +5,26 @@ import { DynamicFormControlModel, DynamicFormService, DynamicCheckboxModel, Dyna
 import { RestService } from '../../../../services/';
 
 @Component({
-  selector: 'app-cifs-edit',
+  selector: 'app-smb-edit',
   template: `<entity-edit [conf]="this"></entity-edit>`
 })
-export class CIFSEditComponent {
+export class SMBEditComponent {
 
-  protected resource_name: string = 'sharing/cifs/';
-  protected route_delete: string[] = ['sharing', 'cifs', 'delete'];
-  protected route_success: string[] = ['sharing', 'cifs'];
+  protected resource_name: string = 'sharing/smb/';
+  protected route_delete: string[] = ['sharing', 'smb', 'delete'];
+  protected route_success: string[] = ['sharing', 'smb'];
 
   protected formModel: DynamicFormControlModel[] = [
     new DynamicInputModel({
-      id: 'cifs_name',
+      id: 'smb_name',
       label: 'Name',
     }),
     new DynamicInputModel({
-      id: 'cifs_path',
+      id: 'smb_path',
       label: 'Path',
     }),
     new DynamicSelectModel({
-      id: 'cifs_vfsobjects',
+      id: 'smb_vfsobjects',
       label: 'VFS Objects',
       multiple: true,
     }),

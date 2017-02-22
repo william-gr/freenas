@@ -6,41 +6,41 @@ import { GlobalState } from '../../../../global.state';
 import { RestService, WebSocketService } from '../../../../services/';
 
 @Component({
-  selector: 'app-cifs-add',
+  selector: 'app-smb-add',
   template: `<entity-add [conf]="this"></entity-add>`
 })
-export class CIFSAddComponent {
+export class SMBAddComponent {
 
-  protected route_success: string[] = ['sharing', 'cifs'];
-  protected resource_name: string = 'sharing/cifs/';
+  protected route_success: string[] = ['sharing', 'smb'];
+  protected resource_name: string = 'sharing/smb/';
 
   protected formModel: DynamicFormControlModel[] = [
     new DynamicInputModel({
-      id: 'cifs_name',
+      id: 'smb_name',
       label: 'Name',
     }),
     new DynamicInputModel({
-      id: 'cifs_path',
+      id: 'smb_path',
       label: 'Path',
     }),
     new DynamicSelectModel({
-      id: 'cifs_vfsobjects',
+      id: 'smb_vfsobjects',
       label: 'VFS Objects',
       multiple: true,
     }),
   ];
 
-  private cifs_vfsobjects: DynamicSelectModel<string>;
+  private smb_vfsobjects: DynamicSelectModel<string>;
 
   constructor(protected router: Router, protected rest: RestService, protected ws: WebSocketService, protected formService: DynamicFormService, protected _state: GlobalState) {
 
   }
 
   afterInit(entityAdd: any) {
-    entityAdd.ws.call('notifier.choices', ['CIFS_VFS_OBJECTS']).subscribe((res) => {
-      this.cifs_vfsobjects = <DynamicSelectModel<string>>this.formService.findById("cifs_vfsobjects", this.formModel);
+    entityAdd.ws.call('notifier.choices', ['SMB_VFS_OBJECTS']).subscribe((res) => {
+      this.smb_vfsobjects = <DynamicSelectModel<string>>this.formService.findById("smb_vfsobjects", this.formModel);
       res.forEach((item) => {
-        this.cifs_vfsobjects.add({ label: item[1], value: item[0] });
+        this.smb_vfsobjects.add({ label: item[1], value: item[0] });
       });
     });
   }

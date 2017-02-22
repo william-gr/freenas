@@ -48,17 +48,17 @@ export const PAGES_MENU = [
     order: 0
   },
   {
-    path: ['sharing', 'cifs'],
-    title: 'CIFS',
-    icon: 'ion-social-windows',
+    path: ['sharing', 'nfs'],
+    title: 'NFS',
+    icon: 'ion-social-freebsd-devil',
     selected: false,
     expanded: false,
     order: 0
   },
   {
-    path: ['sharing', 'nfs'],
-    title: 'NFS',
-    icon: 'ion-social-freebsd-devil',
+    path: ['sharing', 'smb'],
+    title: 'SMB',
+    icon: 'ion-social-windows',
     selected: false,
     expanded: false,
     order: 0
