@@ -1,7 +1,7 @@
-import { Routes, RouterModule }  from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { Pages } from './pages.component';
 import { ModuleWithProviders } from '@angular/core';
-import { AuthGuard }           from './login/auth-guard.service';
+import { AuthGuard } from './login/auth-guard.service';
 // noinspection TypeScriptValidateTypes
 
 // export function loadChildren(path) { return System.import(path); };
@@ -21,6 +21,7 @@ export const routes: Routes = [
       { path: 'groups', loadChildren: 'app/pages/groups/groups.module#GroupsModule' },
       { path: 'interfaces', loadChildren: 'app/pages/interfaces/interfaces.module#InterfacesModule' },
       { path: 'volumes', loadChildren: 'app/pages/volumes/volumes.module#VolumesModule' },
+      { path: 'sharing/cifs', loadChildren: 'app/pages/sharing/cifs/cifs.module#CIFSModule' },
       { path: 'services', loadChildren: 'app/pages/services/services.module#ServicesModule' },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ]

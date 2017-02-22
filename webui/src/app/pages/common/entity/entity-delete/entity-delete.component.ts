@@ -27,7 +27,9 @@ export class EntityDeleteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.conf.afterInit(this);
+      if(this.conf.afterInit) {
+        this.conf.afterInit(this);
+      }
       if(this.conf.getPK) {
         this.conf.getPK.bind(this.conf)(this, params);
       } else {
