@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   template: `
   <ba-card>
     <div [ngBusy]="busy">
-    {{ status.service }}
+    {{ status.label }}
 
     <button class="btn btn-primary" (click)="toggle()">
       <span *ngIf="status.state != 'RUNNING'">Start</span>
