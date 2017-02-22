@@ -42,7 +42,6 @@ export class VolumesListComponent {
   }
 
   getActions(row) {
-    console.log(row);
     if(row.type == "dataset") {
       return [
         {
