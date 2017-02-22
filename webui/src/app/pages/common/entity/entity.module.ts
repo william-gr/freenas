@@ -11,6 +11,7 @@ import { EntityDeleteComponent } from './entity-delete/entity-delete.component';
 import { EntityEditComponent } from './entity-edit/entity-edit.component';
 import { EntityListComponent } from './entity-list/entity-list.component';
 import { EntityListActionsComponent } from './entity-list/entity-list-actions.component';
+import { RangePipe } from '../../../utils/range.pipe';
 
 import { RestService, WebSocketService } from '../../../services/index';
 
@@ -30,6 +31,7 @@ import { RestService, WebSocketService } from '../../../services/index';
     EntityEditComponent,
     EntityListComponent,
     EntityListActionsComponent,
+    RangePipe,
   ],
   exports: [
     EntityAddComponent,
