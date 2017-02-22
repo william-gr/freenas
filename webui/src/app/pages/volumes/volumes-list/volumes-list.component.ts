@@ -47,7 +47,7 @@ export class VolumesListComponent {
         {
           label: "Add Dataset",
           onClick: (row) => {
-            this._router.navigate(new Array('/pages').concat(["volumes", "id", row.id, "dataset", "add", row.path]));
+            this._router.navigate(new Array('/pages').concat(["volumes", "id", row.path.split('/')[0], "dataset", "add", row.path]));
           }
         }
       ]

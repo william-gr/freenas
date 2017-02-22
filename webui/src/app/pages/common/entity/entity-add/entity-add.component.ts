@@ -37,16 +37,16 @@ export class EntityAddComponent implements OnInit {
 
   onSubmit() {
     this.error = null;
-    let value = this.data;
+    let value = this.formGroup.value;
     for(let i in value) {
-      let clean = this['clean_' + i];
+      let clean = this.conf['clean_' + i];
       if(clean) {
-        value = clean(value, i);
+        value[i] = clean.bind(this.conf)(value[i]);
       }
     }
 
     this.busy = this.rest.post(this.conf.resource_name, {
-      body: JSON.stringify(this.formGroup.value),
+      body: JSON.stringify(value),
     }).subscribe((res) => {
       this.router.navigate(new Array('/pages').concat(this.conf.route_success));
     }, (res) => {

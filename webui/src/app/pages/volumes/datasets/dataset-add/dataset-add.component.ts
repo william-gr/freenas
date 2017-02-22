@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 export class DatasetAddComponent {
 
   protected pk: any;
+  protected path: string;
   private sub: Subscription;
   protected route_success: string[] = ['volumes'];
   get resource_name(): string {
@@ -32,9 +33,19 @@ export class DatasetAddComponent {
 
   }
 
+  clean_name(value) {
+    let start = this.path.split('/').splice(1).join('/');
+    if(start != '') {
+      return start + '/' + value;
+    } else {
+      return value;
+    }
+  }
+
   afterInit(entityAdd: any) {
     this.sub = this.aroute.params.subscribe(params => {
       this.pk = params['pk'];
+      this.path = params['path'];
     });
     // this.rest.get(this.resource_name, {limit: 0, bsdgrp_builtin: false}).subscribe((res) => {
     //   let gid = 999;
