@@ -20,8 +20,8 @@ export class SMBListComponent {
   }
 
   public columns: any[] = [
-    { title: 'Name', name: 'smb_name' },
-    { title: 'Path', name: 'smb_path' },
+    { title: 'Name', name: 'cifs_name' },
+    { title: 'Path', name: 'cifs_path' },
   ];
   public config: any = {
     paging: true,
