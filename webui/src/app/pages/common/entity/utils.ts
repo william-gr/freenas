@@ -27,7 +27,14 @@ export class EntityUtils {
         }
       } else if(res.code == 400) {
         entity.error = res.error;
+      } else if(res.code == 500) {
+        if(res.error.error_message) {
+          entity.error = res.error.error_message;
+        } else {
+          entity.error = 'Server error: ' + res.error;
+        }
       } else {
+        entity.error = 'Fatal error! Check logs.';
         console.log("Unknown error code", res.code);
       }
 
