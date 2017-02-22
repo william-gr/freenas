@@ -43,20 +43,23 @@ export class VolumesListComponent {
 
   getActions(row) {
     if(row.type == "dataset") {
-      return [
+      let actions = [
         {
           label: "Add Dataset",
           onClick: (row) => {
             this._router.navigate(new Array('/pages').concat(["volumes", "id", row.path.split('/')[0], "dataset", "add", row.path]));
           }
         },
-        {
+      ];
+      if(row.path.indexOf('/') != -1) {
+        actions.push({
           label: "Delete Dataset",
           onClick: (row) => {
             this._router.navigate(new Array('/pages').concat(["volumes", "id", row.path.split('/')[0], "dataset", "delete", row.path]));
           }
-        },
-      ]
+        });
+      }
+      return actions;
     }
     return [];
   }
