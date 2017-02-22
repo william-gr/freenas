@@ -13,6 +13,9 @@
      <td *ngFor="let c of conf.columns; let idx = index"><span *ngIf="idx == 0"><span *ngFor="let lvl of i._level | range">&nbsp;&nbsp;&nbsp;</span></span><a>{{ rowValue(i, c.name) }}</a></td>
      <td><app-entity-list-actions [entity]="this" [row]="i"></app-entity-list-actions></td>
    </tr>
+   <tr *ngIf="rows.length == 0">
+     <td [attr.colspan]="conf.columns.length + 1">No entries have been found.</td>
+   </tr>
   </tbody>
 </table>
 </ba-card>
