@@ -17,7 +17,7 @@ import { DatasetDeleteComponent } from './datasets/dataset-delete/';
 import { VolumesListComponent } from './volumes-list/';
 import { ManagerComponent, DiskComponent, VdevComponent } from './manager/';
 //import { VolumesEditComponent } from './volumes-edit/';
-//import { VolumesDeleteComponent } from './volumes-delete/';
+import { VolumeDeleteComponent } from './volume-delete/';
 
 @NgModule({
   imports: [
@@ -41,7 +41,7 @@ import { ManagerComponent, DiskComponent, VdevComponent } from './manager/';
     DatasetAddComponent,
     DatasetDeleteComponent,
     //VolumesEditComponent,
-    //VolumesDeleteComponent,
+    VolumeDeleteComponent,
   ],
   providers: [
   ]

@@ -6,7 +6,7 @@ import { DatasetAddComponent } from './datasets/dataset-add/';
 import { DatasetDeleteComponent } from './datasets/dataset-delete/';
 import { ManagerComponent } from './manager/';
 //import { VolumesEditComponent } from './volumes-edit/index';
-//import { VolumesDeleteComponent } from './volumes-delete/index';
+import { VolumeDeleteComponent } from './volume-delete/index';
 
 
 export const routes: Routes = [
@@ -15,6 +15,6 @@ export const routes: Routes = [
   { path: 'id/:pk/dataset/delete/:path', component: DatasetDeleteComponent },
   { path: 'manager', component: ManagerComponent },
   //{ path: 'edit/:pk', component: VolumesEditComponent },
-  //{ path: 'delete/:pk', component: VolumesDeleteComponent },
+  { path: 'delete/:pk', component: VolumeDeleteComponent },
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

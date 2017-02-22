@@ -48,11 +48,23 @@ export class EntityDeleteComponent implements OnInit, OnDestroy {
   }
 
   doSubmit() {
-    this.busy = this.rest.delete(this.conf.resource_name + '/' + this.pk, {}).subscribe((res) => {
+    let data = {};
+    if(this.conf.clean) {
+      data = this.conf.clean.bind(this.conf)(data);
+    }
+    this.busy = this.rest.delete(this.conf.resource_name + '/' + this.pk, data).subscribe((res) => {
       this.router.navigate(new Array('/pages').concat(this.conf.route_success));
     }, (res) => {
       new EntityUtils().handleError(this, res);
     });
+  }
+
+  doCancel() {
+    let route = this.conf.route_cancel;
+    if(!route) {
+      route = this.conf.route_success;
+    }
+    this.router.navigate(new Array('/pages').concat(route));
   }
 
 }
