@@ -46,13 +46,12 @@ export class EntityEditComponent implements OnInit, OnDestroy {
             fg.setValue(this.data[i]);
           }
         }
+        if(this.conf.initial) {
+          this.conf.initial.bind(this.conf)(this);
+        }
       })
     });
     this.conf.afterInit(this);
-  }
-
-  clean(value) {
-    return value;
   }
 
   gotoDelete() {
@@ -71,7 +70,10 @@ export class EntityEditComponent implements OnInit, OnDestroy {
     if('id' in value) {
       delete value['id'];
     }
-    value = this.clean(value);
+
+    if(this.conf.clean) {
+      value = this.conf.clean.bind(this.conf)(value);
+    }
 
     this.busy = this.rest.put(this.conf.resource_name + '/' + this.pk + '/', {
       body: JSON.stringify(value),

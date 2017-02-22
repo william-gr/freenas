@@ -45,6 +45,10 @@ export class EntityAddComponent implements OnInit {
       }
     }
 
+    if(this.conf.clean) {
+      value = this.conf.clean.bind(this.conf)(value);
+    }
+
     this.busy = this.rest.post(this.conf.resource_name, {
       body: JSON.stringify(value),
     }).subscribe((res) => {

@@ -22,6 +22,7 @@ export const routes: Routes = [
       { path: 'interfaces', loadChildren: 'app/pages/interfaces/interfaces.module#InterfacesModule' },
       { path: 'volumes', loadChildren: 'app/pages/volumes/volumes.module#VolumesModule' },
       { path: 'sharing/cifs', loadChildren: 'app/pages/sharing/cifs/cifs.module#CIFSModule' },
+      { path: 'sharing/nfs', loadChildren: 'app/pages/sharing/nfs/nfs.module#NFSModule' },
       { path: 'services', loadChildren: 'app/pages/services/services.module#ServicesModule' },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ]
