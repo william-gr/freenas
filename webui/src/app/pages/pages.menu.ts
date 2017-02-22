@@ -40,6 +40,14 @@ export const PAGES_MENU = [
     order: 0
   },
   {
+    path: ['sharing', 'afp'],
+    title: 'AFP',
+    icon: 'ion-social-apple',
+    selected: false,
+    expanded: false,
+    order: 0
+  },
+  {
     path: ['sharing', 'cifs'],
     title: 'CIFS',
     icon: 'ion-social-windows',

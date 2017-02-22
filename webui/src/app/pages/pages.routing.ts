@@ -21,6 +21,7 @@ export const routes: Routes = [
       { path: 'groups', loadChildren: 'app/pages/groups/groups.module#GroupsModule' },
       { path: 'interfaces', loadChildren: 'app/pages/interfaces/interfaces.module#InterfacesModule' },
       { path: 'volumes', loadChildren: 'app/pages/volumes/volumes.module#VolumesModule' },
+      { path: 'sharing/afp', loadChildren: 'app/pages/sharing/afp/afp.module#AFPModule' },
       { path: 'sharing/cifs', loadChildren: 'app/pages/sharing/cifs/cifs.module#CIFSModule' },
       { path: 'sharing/nfs', loadChildren: 'app/pages/sharing/nfs/nfs.module#NFSModule' },
       { path: 'services', loadChildren: 'app/pages/services/services.module#ServicesModule' },
