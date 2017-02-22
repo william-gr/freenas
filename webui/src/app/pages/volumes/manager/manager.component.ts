@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DragulaService } from 'ng2-dragula';
@@ -23,14 +23,13 @@ export class ManagerComponent implements OnInit {
 
   public disks: Array<any>;
   public vdevs: any = {
-    data: [
-      {},
-    ],
-    cache: [],
-    spare: [],
-    log: []
+    data: [{}],
+    cache: [{}],
+    spare: [{}],
+    log: [{}]
   }
   public error: string;
+  @ViewChild('disksdnd') disksdnd;
   @ViewChildren(VdevComponent) vdevComponents: QueryList<VdevComponent>;
   @ViewChildren(DiskComponent) diskComponents: QueryList<DiskComponent>;
 
@@ -41,7 +40,7 @@ export class ManagerComponent implements OnInit {
   constructor(private rest: RestService, private ws: WebSocketService, private router: Router, private dragulaService: DragulaService) {
     dragulaService.setOptions('pool-vdev', {
       accepts: (el, target, source, sibling) => {
-	return true;
+        return true;
       },
     });
     dragulaService.drag.subscribe((value) => {
@@ -51,21 +50,21 @@ export class ManagerComponent implements OnInit {
       let [bucket, diskDom, destDom, srcDom, _] = value;
       let disk, srcVdev, destVdev;
       this.diskComponents.forEach((item) => {
-        if(diskDom == item.elementRef.nativeElement) {
+        if (diskDom == item.elementRef.nativeElement) {
           disk = item;
         }
       });
       this.vdevComponents.forEach((item) => {
-        if(destDom == item.dnd.nativeElement) {
+        if (destDom == item.dnd.nativeElement) {
           destVdev = item;
-        } else if(srcDom == item.dnd.nativeElement) {
-                srcVdev = item;
+        } else if (srcDom == item.dnd.nativeElement) {
+          srcVdev = item;
         }
       });
-      if(srcVdev) {
+      if (srcVdev) {
         srcVdev.removeDisk(disk);
       }
-      if(destVdev) {
+      if (destVdev) {
         destVdev.addDisk(disk);
       }
     });
@@ -80,7 +79,7 @@ export class ManagerComponent implements OnInit {
   ngOnInit() {
     this.ws.call("notifier.get_disks", [true]).subscribe((res) => {
       this.disks = []
-      for(let i in res) {
+      for (let i in res) {
         this.disks.push(res[i]);
       }
     });
@@ -88,6 +87,22 @@ export class ManagerComponent implements OnInit {
 
   addVdev(group) {
     this.vdevs[group].push({});
+  }
+
+  removeVdev(vdev: VdevComponent) {
+    let index = null;
+    this.vdevComponents.forEach((item, i) => {
+      if(item === vdev) {
+        index = i;
+      }
+    });
+    if(index !== null) {
+      vdev.getDisks().forEach((item) => {
+        item.elementRef.nativeElement.parentNode.removeChild(item.elementRef.nativeElement);
+        this.disksdnd.nativeElement.appendChild(item.elementRef.nativeElement);
+      });
+      this.vdevs[vdev.group].splice(index, 1);
+    }
   }
 
   doSubmit() {
@@ -99,7 +114,9 @@ export class ManagerComponent implements OnInit {
       vdev.getDisks().forEach((disk) => {
         disks.push(disk.data.devname);
       });
-      layout.push({vdevtype: vdev.type, disks: disks});
+      if (disks.length > 0) {
+        layout.push({ vdevtype: vdev.type, disks: disks });
+      }
     });
     this.busy = this.rest.post('storage/volume/', {
       body: JSON.stringify({
@@ -107,11 +124,11 @@ export class ManagerComponent implements OnInit {
         layout: layout
       })
     }).subscribe((res) => {
-    this.router.navigate(['/pages', 'volumes']);
+      this.router.navigate(['/pages', 'volumes']);
     }, (res) => {
-      if(res.code == 409) {
+      if (res.code == 409) {
         this.error = '';
-        for(let i in res.error) {
+        for (let i in res.error) {
           res.error[i].forEach((error) => {
             this.error += error + '<br />';
           });

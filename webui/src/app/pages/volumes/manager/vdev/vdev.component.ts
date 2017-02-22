@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, QueryList, ViewChild } from '@angular/core';
 
 import { DiskComponent } from '../disk/';
+import { ManagerComponent } from '../manager.component';
 
 @Component({
   selector: 'app-vdev',
@@ -10,8 +11,10 @@ import { DiskComponent } from '../disk/';
 export class VdevComponent implements OnInit {
 
   @Input() group: string;
+  @Input() manager: ManagerComponent;
   @ViewChild('dnd') dnd;
   public type: string = 'stripe';
+  public removable: boolean = true;
   private diskComponents: Array<DiskComponent> = [];
 
   constructor(public elementRef: ElementRef) {}
@@ -24,7 +27,7 @@ export class VdevComponent implements OnInit {
   }
 
   removeDisk(disk: DiskComponent) {
-    delete this.diskComponents[this.diskComponents.indexOf(disk)];
+    this.diskComponents.splice(this.diskComponents.indexOf(disk), 1);
   }
 
   getDisks() {
@@ -32,8 +35,11 @@ export class VdevComponent implements OnInit {
   }
 
   onTypeChange(e) {
-    console.log(e);
-    console.log(this.group);
+    console.log(e, this.group);
+  }
+
+  remove() {
+    this.manager.removeVdev(this);
   }
 
 }
