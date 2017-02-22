@@ -13,9 +13,9 @@ import { routing }       from './volumes.routing';
 import { DragulaModule } from 'ng2-dragula';
 
 import { DatasetAddComponent } from './datasets/dataset-add/';
+import { DatasetDeleteComponent } from './datasets/dataset-delete/';
 import { VolumesListComponent } from './volumes-list/';
 import { ManagerComponent, DiskComponent, VdevComponent } from './manager/';
-//import { VolumesAddComponent } from './volumes-add/';
 //import { VolumesEditComponent } from './volumes-edit/';
 //import { VolumesDeleteComponent } from './volumes-delete/';
 
@@ -39,7 +39,7 @@ import { ManagerComponent, DiskComponent, VdevComponent } from './manager/';
     DiskComponent,
     VdevComponent,
     DatasetAddComponent,
-    //VolumesAddComponent,
+    DatasetDeleteComponent,
     //VolumesEditComponent,
     //VolumesDeleteComponent,
   ],

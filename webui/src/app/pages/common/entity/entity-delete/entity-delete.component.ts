@@ -2,6 +2,7 @@ import { ApplicationRef, Component, Input, Injector, OnDestroy, OnInit } from '@
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RestService } from '../../../../services/rest.service';
+import { EntityUtils } from '../utils';
 
 import { Subscription } from 'rxjs';
 
@@ -26,7 +27,12 @@ export class EntityDeleteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.pk = params['pk'];
+      this.conf.afterInit(this);
+      if(this.conf.getPK) {
+        this.conf.getPK.bind(this.conf)(this, params);
+      } else {
+        this.pk = params['pk'];
+      }
       this.rest.get(this.conf.resource_name + '/' + this.pk + '/', {}).subscribe((res) => {
         this.data = res.data;
       }, () => {
@@ -43,11 +49,7 @@ export class EntityDeleteComponent implements OnInit, OnDestroy {
     this.busy = this.rest.delete(this.conf.resource_name + '/' + this.pk, {}).subscribe((res) => {
       this.router.navigate(new Array('/pages').concat(this.conf.route_success));
     }, (res) => {
-      if(res.error.exception_class == 'ValidationErrors') {
-        res.error.errors.forEach((item, i) => {
-          this.error = item[0] + ': ' + item[1];
-        });
-      }
+      new EntityUtils().handleError(this, res);
     });
   }
 

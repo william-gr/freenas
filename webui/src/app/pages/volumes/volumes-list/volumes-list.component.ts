@@ -49,7 +49,13 @@ export class VolumesListComponent {
           onClick: (row) => {
             this._router.navigate(new Array('/pages').concat(["volumes", "id", row.path.split('/')[0], "dataset", "add", row.path]));
           }
-        }
+        },
+        {
+          label: "Delete Dataset",
+          onClick: (row) => {
+            this._router.navigate(new Array('/pages').concat(["volumes", "id", row.path.split('/')[0], "dataset", "delete", row.path]));
+          }
+        },
       ]
     }
     return [];
