@@ -29,5 +29,11 @@ export class GroupListComponent {
     sorting: {columns: this.columns},
   };
 
+  isActionVisible(actionId: string, row: any) {
+    if(actionId == 'delete' && row.bsdgrp_builtin === true) {
+      return false;
+    }
+    return true;
+  }
 
 }

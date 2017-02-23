@@ -17,16 +17,16 @@ export class EntityListComponent implements OnInit {
 
   private busy: Subscription;
 
-  public rows:Array<any> = [];
-  public columns:Array<any> = [];
-  public page:number = 1;
-  public itemsPerPage:number = 10;
-  public maxSize:number = 5;
-  public numPages:number = 1;
-  public length:number = 0;
-  public config:any = {
+  public rows: Array<any> = [];
+  public columns: Array<any> = [];
+  public page: number = 1;
+  public itemsPerPage: number = 10;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
+  public config: any = {
     paging: true,
-    sorting: {columns: this.columns},
+    sorting: { columns: this.columns },
   };
 
   constructor(protected rest: RestService, protected router: Router, protected _state: GlobalState, protected _eRef: ElementRef) { }
@@ -37,21 +37,21 @@ export class EntityListComponent implements OnInit {
 
   getData() {
     let offset = this.itemsPerPage * (this.page - 1)
-    let sort:Array<String> = [];
-    let options:Object = new Object();
+    let sort: Array<String> = [];
+    let options: Object = new Object();
 
-    for(let i in this.config.sorting.columns) {
+    for (let i in this.config.sorting.columns) {
       let col = this.config.sorting.columns[i];
-      if(col.sort == 'asc') {
+      if (col.sort == 'asc') {
         sort.push(col.name);
-      } else if(col.sort == 'desc') {
+      } else if (col.sort == 'desc') {
         sort.push('-' + col.name);
       }
     }
 
     //options = {limit: this.itemsPerPage, offset: offset};
-    options = {limit: 0};
-    if(sort.length > 0) {
+    options = { limit: 0 };
+    if (sort.length > 0) {
       options['sort'] = sort.join(',');
     }
 
@@ -61,15 +61,15 @@ export class EntityListComponent implements OnInit {
     });
   }
 
-  flattenData(data, level=0, parent?: any) {
+  flattenData(data, level = 0, parent?: any) {
     let ndata = [];
     data.forEach((item) => {
       item._level = level;
-      if(parent) {
+      if (parent) {
         item._parent = parent.id;
       }
       ndata.push(item);
-      if(item.children) {
+      if (item.children) {
         ndata = ndata.concat(this.flattenData(item.children, level + 1, item));
       }
       delete item.children;
@@ -77,7 +77,7 @@ export class EntityListComponent implements OnInit {
     return ndata;
   }
 
-  onChangeTable(config, page:any = {page: this.page, itemsPerPage: this.itemsPerPage}) {
+  onChangeTable(config, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }) {
     if (config.filtering) {
       Object.assign(this.config.filtering, config.filtering);
     }
@@ -91,35 +91,37 @@ export class EntityListComponent implements OnInit {
   trClass(row) {
     let classes = [];
     classes.push('treegrid-' + row.id);
-    if(row._parent) {
+    if (row._parent) {
       classes.push('treegrid-parent-' + row._parent);
     }
     return classes.join(' ');
   }
 
   getActions(row) {
-    if(this.conf.getActions) {
+    if (this.conf.getActions) {
       return this.conf.getActions(row);
     } else {
       return [
         {
+          id: "edit",
           label: "Edit",
           onClick: (row) => {
             this.doEdit(row.id);
-          }
+          },
         },
         {
+          id: "delete",
           label: "Delete",
           onClick: (row) => {
             this.doDelete(row.id);
-          }
+          },
         },
       ]
     }
   }
 
   rowValue(row, attr) {
-    if(this.conf.rowValue) {
+    if (this.conf.rowValue) {
       return this.conf.rowValue(row, attr);
     }
     return row[attr];

@@ -24,5 +24,11 @@ export class UserListComponent {
     sorting: {columns: this.columns},
   };
 
+  isActionVisible(actionId: string, row: any) {
+    if(actionId == 'delete' && row.bsdusr_builtin === true) {
+      return false;
+    }
+    return true;
+  }
 
 }
