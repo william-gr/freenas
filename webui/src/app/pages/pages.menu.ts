@@ -10,6 +10,9 @@ export const PAGES_MENU = [
   {
     title: 'Accounts',
     icon: 'ion-person-stalker',
+    selected: false,
+    expanded: false,
+    order: 0,
     children: [
       {
         path: ['users'],
@@ -48,6 +51,9 @@ export const PAGES_MENU = [
   {
     title: 'Sharing',
     icon: 'ion-share',
+    selected: false,
+    expanded: false,
+    order: 0,
     children: [
       {
         path: ['sharing', 'afp'],

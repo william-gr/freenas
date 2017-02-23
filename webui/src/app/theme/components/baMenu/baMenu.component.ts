@@ -39,8 +39,8 @@ export class BaMenu {
       this.menuItems = this._service.selectMenuItem(this.menuItems);
       let current = this._service.getCurrentItem();
       let url = new Array('/pages').concat(current.path);
-      if(this._router.isActive(this._router.serializeUrl(this._router.createUrlTree(url)), true)) {
-        this._state.notifyDataChanged('menu.activeLink', {links: [current]});
+      if (this._router.isActive(this._router.serializeUrl(this._router.createUrlTree(url)), true)) {
+        this._state.notifyDataChanged('menu.activeLink', { links: [current] });
       }
     }
   }
@@ -50,10 +50,10 @@ export class BaMenu {
 
       if (event instanceof NavigationEnd) {
         if (this.menuItems) {
-	  this.selectMenuAndNotify();
+          this.selectMenuAndNotify();
         } else {
           // on page load we have to wait as event is fired before menu elements are prepared
-	  setTimeout(() => this.selectMenuAndNotify());
+          setTimeout(() => this.selectMenuAndNotify());
         }
       }
     });

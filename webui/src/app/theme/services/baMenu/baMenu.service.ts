@@ -25,17 +25,17 @@ export class BaMenuService {
     return this._currentMenuItem;
   }
 
-  public selectMenuItem(menuItems:any[]):any[] {
+  public selectMenuItem(menuItems:any[], parent?: any):any[] {
     let items = [];
     menuItems.forEach((item) => {
-      this._selectItem(item);
+      this._selectItem(item, parent);
 
       if (item.selected) {
         this._currentMenuItem = item;
       }
 
       if (item.children && item.children.length > 0) {
-        item.children = this.selectMenuItem(item.children);
+        item.children = this.selectMenuItem(item.children, item);
       }
       items.push(item);
     });
@@ -88,9 +88,12 @@ export class BaMenuService {
     return prepared;
   }
 
-  protected _selectItem(object:any):any {
+  protected _selectItem(object:any, parent?: any):any {
     let url = new Array('/pages').concat(object.path);
     object.selected = this._router.isActive(this._router.serializeUrl(this._router.createUrlTree(url)), object.pathMatch === 'full');
+    if(object.selected && parent !== undefined) {
+      parent.expanded = true;
+    }
     return object;
   }
 }
