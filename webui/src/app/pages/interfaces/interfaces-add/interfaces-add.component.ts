@@ -38,9 +38,10 @@ export class InterfacesAddComponent {
         },
       ],
     }),
-    new DynamicInputModel({
+    new DynamicSelectModel({
       id: 'int_v4netmaskbit',
       label: 'IPv4 Netmask',
+      options: Array(32).fill(0).map((x,i) => { return {label: String(32 - i), value: String(32 - i)}; }),
       relation: [
         {
           action: "DISABLE",
