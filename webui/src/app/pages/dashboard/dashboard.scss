@@ -12,12 +12,10 @@
   }
 }
 
-.user-stats-card {
-  .card-title {
-    padding: 0 0 15px;
-  }
+.systeminfo {
+  line-height: 200%;
 }
 
-.blurCalendar {
-  height: 475px;
+.systeminfo .col-md-2 {
+  font-weight: bold;
 }
