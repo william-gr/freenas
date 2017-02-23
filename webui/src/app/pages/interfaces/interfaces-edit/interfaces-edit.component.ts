@@ -22,6 +22,7 @@ export class InterfacesEditComponent {
     new DynamicInputModel({
         id: 'int_interface',
         label: 'Interface',
+        readOnly: true,
     }),
     new DynamicInputModel({
         id: 'int_ipv4address',
