@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { WebSocketService } from '../../services/';
+import { RestService, WebSocketService } from '../../services/';
 
 @Component({
   selector: 'dashboard',
@@ -11,7 +11,7 @@ export class Dashboard implements OnInit {
 
   protected info: any = {};
 
-  protected graphs = [
+  protected graphs: any[] = [
     {
       title: "Average Load",
       legends: ['Short Term', ' Mid Term', 'Long Term'],
@@ -45,7 +45,18 @@ export class Dashboard implements OnInit {
     },
   ];
 
-  constructor(private ws: WebSocketService) {
+  constructor(private rest: RestService, private ws: WebSocketService) {
+    rest.get('storage/volume/', {}).subscribe((res) => {
+      res.data.forEach((vol) => {
+        this.graphs.splice(0, 0, {
+          title: vol.vol_name + " Volume Usage",
+          type: 'Pie',
+          legends: ['Available', 'Used'],
+          dataList: [],
+          series: [vol.avail, vol.used],
+        });
+      });
+    });
   }
 
   ngOnInit() {

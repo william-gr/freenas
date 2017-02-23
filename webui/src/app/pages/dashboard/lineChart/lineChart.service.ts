@@ -14,7 +14,7 @@ export class LineChartService {
     this._ws.call('stats.get_data', [ dataList, {} ]).subscribe((res) => {
       dataList.forEach(() => { chart.data.series.push([]); })
       res.data.forEach((item, i) => {
-        chart.data.labels.push(new Date(res.meta.start * 1000 + i * res.meta.step));
+        chart.data.labels.push(new Date(res.meta.start * 1000 + i * res.meta.step * 1000));
         for(let x in dataList) {
           chart.data.series[x].push(item[x]);
         }
