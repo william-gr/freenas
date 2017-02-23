@@ -29,6 +29,10 @@ export class UserAddComponent {
         label: 'Full Name',
     }),
     new DynamicInputModel({
+      id: 'bsdusr_home',
+      label: 'Home Directory',
+    }),
+    new DynamicInputModel({
         id: 'bsdusr_email',
         label: 'Email',
     }),
