@@ -1,1 +1,6 @@
-<ba-am-chart baAmChartClass="dashboard-line-chart" [baAmChartConfiguration]="chartData" (onChartReady)="initChart($event)"></ba-am-chart>
+<x-chartist
+  [data]="data"
+  [type]="type"
+  [options]="options"
+  [responsiveOptions]="responsiveOptions">
+</x-chartist>

@@ -1,5 +1,4 @@
-<div class="row">
-  <ba-card class="systeminfo col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="System Information" baCardClass="traffic-panel medium-card">
+  <ba-card class="systeminfo col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="System Information" baCardClass="traffic-panel">
     <div class="row">
       <div class="col-md-3">Uptime</div>
       <div class="col-md-9">{{ info.uptime }}</div>
@@ -21,4 +20,8 @@
       <div class="col-md-9">{{ info.physmem }}</div>
     </div>
   </ba-card>
-</div>
+  <ba-card *ngFor="let graph of graphs" class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+           [title]="graph.title" baCardClass="">
+    <line-chart [dataList]="graph.dataList" [legends]="graph.legends"></line-chart>
+  </ba-card>
+<div class="clearfix"></div>

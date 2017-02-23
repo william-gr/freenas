@@ -85,7 +85,7 @@ export class WebSocketService {
 
   }
 
-  call(method, params): Observable<any> {
+  call(method, params?: any): Observable<any> {
 
     let uuid = UUID.UUID();
     let payload = {
